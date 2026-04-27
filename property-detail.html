@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物件詳細 - パークサイド渋谷</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .info-row { display:grid; grid-template-columns:140px 1fr; gap:0.5rem; padding:0.6rem 0; border-bottom:1px dashed var(--vz-border-color); font-size:0.8125rem;}
+        .info-row .info-label { color: var(--vz-muted-color); font-weight:500;}
+        .room-cell { display:flex; align-items:center; gap:0.5rem; }
+        .room-no { width:36px; height:36px; border-radius:6px; background:var(--vz-gray-100); display:inline-flex; align-items:center; justify-content:center; font-weight:600; font-size:0.75rem; color:var(--vz-heading-color);}
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html" class="active"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="物件名・住所で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">管理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">パークサイド渋谷</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li><a href="properties.html">物件管理</a></li>
+                        <li>パークサイド渋谷</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📥 オーナー報告書</button>
+                    <button class="btn btn-soft-primary btn-sm">✏️ 編集</button>
+                    <button class="btn btn-primary btn-sm">＋ 部屋追加</button>
+                </div>
+            </div>
+
+            <!-- ヘッダーカード -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex gap-3 flex-wrap" style="align-items:flex-start;">
+                        <div style="width:200px; height:140px; border-radius:6px; background:linear-gradient(135deg,#5b8def,#3577f1); display:flex; align-items:center; justify-content:center; font-size:3rem; color:rgba(255,255,255,0.9);">🏢</div>
+                        <div style="flex:1; min-width:280px;">
+                            <div class="d-flex gap-2 mb-2">
+                                <span class="badge badge-soft-success">入居率 95.8%</span>
+                                <span class="badge badge-soft-primary">RC造</span>
+                                <span class="badge badge-soft-secondary">一般管理</span>
+                            </div>
+                            <h3 style="font-size:1.125rem; margin-bottom:0.4rem;">パークサイド渋谷</h3>
+                            <div class="text-muted fs-sm mb-2">📍 東京都渋谷区代々木1-2-3 (山手線「代々木」駅 徒歩4分)</div>
+                            <div class="row" style="margin:0;">
+                                <div class="col-3" style="padding:0.5rem 0.5rem 0.5rem 0;">
+                                    <div class="text-muted fs-sm">総戸数</div>
+                                    <div class="fw-bold" style="font-size:1.125rem;">24戸</div>
+                                </div>
+                                <div class="col-3" style="padding:0.5rem;">
+                                    <div class="text-muted fs-sm">空室</div>
+                                    <div class="fw-bold" style="font-size:1.125rem; color:var(--vz-warning);">1戸</div>
+                                </div>
+                                <div class="col-3" style="padding:0.5rem;">
+                                    <div class="text-muted fs-sm">月次想定家賃</div>
+                                    <div class="fw-bold" style="font-size:1.125rem;">¥3.42M</div>
+                                </div>
+                                <div class="col-3" style="padding:0.5rem;">
+                                    <div class="text-muted fs-sm">築年数</div>
+                                    <div class="fw-bold" style="font-size:1.125rem;">12年</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ -->
+            <div class="card">
+                <div class="card-header" style="padding-bottom:0;">
+                    <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
+                        <li><a href="#" class="active">基本情報</a></li>
+                        <li><a href="#">部屋一覧 (24)</a></li>
+                        <li><a href="#">設備履歴</a></li>
+                        <li><a href="#">写真・図面</a></li>
+                        <li><a href="#">契約 (23)</a></li>
+                        <li><a href="#">修繕履歴 (8)</a></li>
+                        <li><a href="#">問合せ (3)</a></li>
+                        <li><a href="#">収支</a></li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <!-- 基本情報 -->
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="card-title mb-3">建物情報</h5>
+                            <div class="info-row"><div class="info-label">物件コード</div><div>BLD-001-2014</div></div>
+                            <div class="info-row"><div class="info-label">物件名</div><div>パークサイド渋谷</div></div>
+                            <div class="info-row"><div class="info-label">所在地</div><div>東京都渋谷区代々木1-2-3</div></div>
+                            <div class="info-row"><div class="info-label">最寄駅</div><div>JR山手線「代々木」駅 徒歩4分<br>都営大江戸線「代々木」駅 徒歩6分</div></div>
+                            <div class="info-row"><div class="info-label">構造</div><div>鉄筋コンクリート造 (RC造)</div></div>
+                            <div class="info-row"><div class="info-label">階数</div><div>地上8階建</div></div>
+                            <div class="info-row"><div class="info-label">築年月</div><div>2014年3月 (築12年)</div></div>
+                            <div class="info-row"><div class="info-label">総戸数</div><div>24戸</div></div>
+                            <div class="info-row"><div class="info-label">駐車場</div><div>機械式 12台 (空1)</div></div>
+                            <div class="info-row"><div class="info-label">敷地面積 / 延床面積</div><div>682.5㎡ / 1,820.4㎡</div></div>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="card-title mb-3">オーナー / 管理委託</h5>
+                            <div class="info-row"><div class="info-label">オーナー名</div><div>株式会社渋谷ホールディングス</div></div>
+                            <div class="info-row"><div class="info-label">区分</div><div>法人</div></div>
+                            <div class="info-row"><div class="info-label">担当者</div><div>木村 大輔 様</div></div>
+                            <div class="info-row"><div class="info-label">連絡先</div><div>090-XXXX-XXXX / kimura@shibuya-hd.co.jp</div></div>
+                            <div class="info-row"><div class="info-label">送金口座</div><div>みずほ銀行 渋谷支店 普通 1234567</div></div>
+                            <div class="info-row"><div class="info-label">源泉徴収</div><div><span class="badge badge-soft-secondary">不要 (法人)</span></div></div>
+                            <div class="info-row"><div class="info-label">管理形態</div><div>一般管理</div></div>
+                            <div class="info-row"><div class="info-label">PMフィー</div><div>賃料収入の 5.0% (税別)</div></div>
+                            <div class="info-row"><div class="info-label">委託契約期間</div><div>2024/04/01 〜 2027/03/31 <span class="badge badge-soft-success">自動更新</span></div></div>
+                            <div class="info-row"><div class="info-label">承認閾値</div><div>修繕5万円以上はオーナー承認必須</div></div>
+                        </div>
+                    </div>
+
+                    <!-- 部屋一覧プレビュー -->
+                    <div class="d-flex justify-between align-center mt-4 mb-3">
+                        <h5 class="card-title">部屋一覧</h5>
+                        <a href="#" class="btn btn-soft-primary btn-sm">＋ 部屋追加</a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>部屋番号</th>
+                                    <th>間取り</th>
+                                    <th>専有面積</th>
+                                    <th>向き</th>
+                                    <th>賃料</th>
+                                    <th>共益費</th>
+                                    <th>ステータス</th>
+                                    <th>入居者</th>
+                                    <th>契約満了日</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><div class="room-cell"><span class="room-no">101</span></div></td>
+                                    <td>1LDK</td>
+                                    <td>38.5㎡</td>
+                                    <td>南東</td>
+                                    <td>¥152,000</td>
+                                    <td>¥8,000</td>
+                                    <td><span class="badge badge-soft-success">入居中</span></td>
+                                    <td>佐々木 健太 様</td>
+                                    <td>2027/02/28</td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="room-cell"><span class="room-no">102</span></div></td>
+                                    <td>1K</td>
+                                    <td>26.2㎡</td>
+                                    <td>北東</td>
+                                    <td>¥108,000</td>
+                                    <td>¥6,000</td>
+                                    <td><span class="badge badge-soft-success">入居中</span></td>
+                                    <td>山田 美咲 様</td>
+                                    <td>2026/09/30</td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="room-cell"><span class="room-no">201</span></div></td>
+                                    <td>1LDK</td>
+                                    <td>38.5㎡</td>
+                                    <td>南東</td>
+                                    <td>¥155,000</td>
+                                    <td>¥8,000</td>
+                                    <td><span class="badge badge-soft-success">入居中</span></td>
+                                    <td>株式会社ABC</td>
+                                    <td>2026/11/30</td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="room-cell"><span class="room-no">301</span></div></td>
+                                    <td>2DK</td>
+                                    <td>45.8㎡</td>
+                                    <td>南西</td>
+                                    <td>¥168,000</td>
+                                    <td>¥9,000</td>
+                                    <td><span class="badge badge-soft-warning">退去予定</span></td>
+                                    <td>佐藤 麻衣 様 (4/30退去)</td>
+                                    <td>2026/04/30</td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="room-cell"><span class="room-no">401</span></div></td>
+                                    <td>1LDK</td>
+                                    <td>38.5㎡</td>
+                                    <td>南東</td>
+                                    <td>¥158,000</td>
+                                    <td>¥8,000</td>
+                                    <td><span class="badge badge-soft-primary">募集中</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="room-cell"><span class="room-no">501</span></div></td>
+                                    <td>1LDK</td>
+                                    <td>40.2㎡</td>
+                                    <td>南</td>
+                                    <td>¥165,000</td>
+                                    <td>¥8,000</td>
+                                    <td><span class="badge badge-soft-success">入居中</span></td>
+                                    <td>田中 雅彦 様</td>
+                                    <td>2027/05/31</td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-end mt-2"><a href="#" class="fs-sm">全 24戸を表示 →</a></div>
+                </div>
+            </div>
+
+            <!-- 関連情報 -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">設備履歴 (直近)</h5>
+                            <a href="#" class="fs-sm">全て表示</a>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-item">
+                                    <div class="list-item-icon">🌡️</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">エアコン (302号室)</div>
+                                        <div class="list-item-meta">ダイキン F40RTRP-W / 設置 2023-06-12 / 保証 2028-06-11</div>
+                                    </div>
+                                    <span class="badge badge-soft-success">保証中</span>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon">🚿</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">給湯器 (共用部)</div>
+                                        <div class="list-item-meta">リンナイ RUF-A2005SAW / 設置 2020-08-21</div>
+                                    </div>
+                                    <span class="badge badge-soft-warning">保証切れ近</span>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon">🔥</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">コンロ (105号室)</div>
+                                        <div class="list-item-meta">パロマ PD-509WS-60CV / 設置 2024-02-03 / 保証 2027-02-02</div>
+                                    </div>
+                                    <span class="badge badge-soft-success">保証中</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">写真・図面</h5>
+                            <a href="#" class="btn btn-soft-primary btn-sm">＋ アップロード</a>
+                        </div>
+                        <div class="card-body">
+                            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem;">
+                                <div style="aspect-ratio:1; border-radius:6px; background:linear-gradient(135deg,#5b8def,#3577f1); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;">🏢</div>
+                                <div style="aspect-ratio:1; border-radius:6px; background:linear-gradient(135deg,#94a3b8,#64748b); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;">🚪</div>
+                                <div style="aspect-ratio:1; border-radius:6px; background:linear-gradient(135deg,#f7b84b,#e69a1f); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;">🛁</div>
+                                <div style="aspect-ratio:1; border-radius:6px; background:linear-gradient(135deg,#0ab39c,#089580); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;">🍳</div>
+                                <div style="aspect-ratio:1; border-radius:6px; background:linear-gradient(135deg,#299cdb,#1d80b5); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;">🏠</div>
+                                <div style="aspect-ratio:1; border-radius:6px; background:linear-gradient(135deg,#b681e1,#8a52c0); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;">📐</div>
+                                <div style="aspect-ratio:1; border-radius:6px; background:linear-gradient(135deg,#878a99,#495057); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#fff;">🪟</div>
+                                <div style="aspect-ratio:1; border-radius:6px; background:var(--vz-gray-100); display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:var(--vz-muted-color);">+24枚</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

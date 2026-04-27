@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダッシュボード - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <!-- サイドバー -->
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html" class="active"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔁</span>原状回復</a></li>
+            <li class="menu-title">募集・分析</li>
+            <li><a href="#"><span class="menu-icon">📢</span>募集管理</a></li>
+            <li><a href="#"><span class="menu-icon">📈</span>レポート</a></li>
+            <li class="menu-title">設定</li>
+            <li><a href="#"><span class="menu-icon">⚙️</span>マスタ管理</a></li>
+            <li><a href="#"><span class="menu-icon">👥</span>ユーザー管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <!-- ヘッダー -->
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="物件名・契約者・部屋番号で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn" title="お知らせ">🔔<span class="badge-dot"></span></button>
+                <button class="header-icon-btn" title="メッセージ">✉️</button>
+                <button class="header-icon-btn" title="ヘルプ">❓</button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div>
+                        <div class="user-name">山形 健司</div>
+                        <div class="user-role">管理担当</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ページ -->
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">ダッシュボード</div>
+                    <ul class="breadcrumb">
+                        <li><a href="#">ホーム</a></li>
+                        <li>ダッシュボード</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📅 期間: 2026年4月</button>
+                    <button class="btn btn-soft-primary btn-sm">📥 CSV出力</button>
+                    <a href="#" class="btn btn-primary btn-sm">＋ 新規物件登録</a>
+                </div>
+            </div>
+
+            <!-- KPIカード -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="kpi-card">
+                        <div>
+                            <div class="kpi-label">管理物件数</div>
+                            <div class="kpi-value">1,248<span class="kpi-unit">戸</span></div>
+                            <div class="kpi-delta">▲ 12戸 (前月比)</div>
+                        </div>
+                        <div class="kpi-icon">🏘️</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card success">
+                        <div>
+                            <div class="kpi-label">入居率</div>
+                            <div class="kpi-value">94.2<span class="kpi-unit">%</span></div>
+                            <div class="kpi-delta">▲ 0.8pt (前月比)</div>
+                        </div>
+                        <div class="kpi-icon">📈</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card warning">
+                        <div>
+                            <div class="kpi-label">滞納件数</div>
+                            <div class="kpi-value">23<span class="kpi-unit">件</span></div>
+                            <div class="kpi-delta down">▲ 3件 (前月比)</div>
+                        </div>
+                        <div class="kpi-icon">⚠️</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card info">
+                        <div>
+                            <div class="kpi-label">今月入金額</div>
+                            <div class="kpi-value">¥84.5<span class="kpi-unit">M</span></div>
+                            <div class="kpi-delta">▲ ¥2.1M (前月比)</div>
+                        </div>
+                        <div class="kpi-icon">💴</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ToDo / 対応待ち -->
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h5 class="card-title">本日のタスク</h5>
+                                <div class="card-subtitle">SLA・期限管理 / 全 18件</div>
+                            </div>
+                            <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
+                                <li><a href="#" class="active">未対応 (8)</a></li>
+                                <li><a href="#">対応中 (7)</a></li>
+                                <li><a href="#">本日完了 (3)</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:32px;"></th>
+                                            <th>カテゴリ</th>
+                                            <th>件名</th>
+                                            <th>関連物件</th>
+                                            <th>期限</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="status-dot danger"></span></td>
+                                            <td><span class="badge badge-soft-danger">滞納</span></td>
+                                            <td>サンセット麻布 102 / 田中様 - 滞納2ヶ月目</td>
+                                            <td>サンセット麻布</td>
+                                            <td><span class="text-muted fs-sm">本日</span></td>
+                                            <td><button class="btn btn-sm btn-soft-primary">対応</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="status-dot warning"></span></td>
+                                            <td><span class="badge badge-soft-warning">修繕</span></td>
+                                            <td>給湯器交換 - オーナー承認待ち (¥182,000)</td>
+                                            <td>パークサイド渋谷</td>
+                                            <td><span class="text-muted fs-sm">本日 17:00</span></td>
+                                            <td><button class="btn btn-sm btn-soft-primary">対応</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="status-dot warning"></span></td>
+                                            <td><span class="badge badge-soft-info">問合せ</span></td>
+                                            <td>エアコン水漏れの連絡 - 鈴木様</td>
+                                            <td>グランデ目黒</td>
+                                            <td><span class="text-muted fs-sm">明日</span></td>
+                                            <td><button class="btn btn-sm btn-soft-primary">対応</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="status-dot info"></span></td>
+                                            <td><span class="badge badge-soft-secondary">更新</span></td>
+                                            <td>更新通知書送付 (4契約) - 6月更新分</td>
+                                            <td>複数物件</td>
+                                            <td><span class="text-muted fs-sm">2026/05/01</span></td>
+                                            <td><button class="btn btn-sm btn-soft-primary">対応</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="status-dot info"></span></td>
+                                            <td><span class="badge badge-soft-primary">退去</span></td>
+                                            <td>立会調整 - 佐藤様 退去予定 4/30</td>
+                                            <td>リバーサイド品川 305</td>
+                                            <td><span class="text-muted fs-sm">2026/04/28</span></td>
+                                            <td><button class="btn btn-sm btn-soft-primary">対応</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="status-dot muted"></span></td>
+                                            <td><span class="badge badge-soft-success">送金</span></td>
+                                            <td>4月分オーナー送金FB作成 (38件)</td>
+                                            <td>全物件</td>
+                                            <td><span class="text-muted fs-sm">2026/04/30</span></td>
+                                            <td><button class="btn btn-sm btn-soft-primary">対応</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">通知 / アラート</h5>
+                            <a href="#" class="fs-sm">全て表示</a>
+                        </div>
+                        <div class="card-body" style="padding-top:0.5rem;">
+                            <ul class="list-group">
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(240,101,72,0.12); color:var(--vz-danger);">⚠️</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">滞納2ヶ月の契約があります</div>
+                                        <div class="list-item-meta">サンセット麻布 102 / 田中様 — 保証会社代位弁済要検討</div>
+                                    </div>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(247,184,75,0.18); color:#c08a2c;">🔔</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">更新通知期限まで7日</div>
+                                        <div class="list-item-meta">6月更新の4契約は本日中の通知書送付を推奨</div>
+                                    </div>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(53,119,241,0.12); color:var(--vz-primary);">📥</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">銀行入金データ取込完了</div>
+                                        <div class="list-item-meta">4/27 自動消込: 132件成功 / 4件要確認</div>
+                                    </div>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(10,179,156,0.12); color:var(--vz-success);">✅</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">月次請求生成完了 (1,210件)</div>
+                                        <div class="list-item-meta">5月分 - PDF生成・メール送付完了</div>
+                                    </div>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(41,156,219,0.12); color:var(--vz-info);">ℹ️</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">新着問合せ: 3件</div>
+                                        <div class="list-item-meta">設備不良2件 / 契約関連1件</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 募集・推移 -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h5 class="card-title">入金推移 (直近6ヶ月)</h5>
+                                <div class="card-subtitle">月次入金額・滞納額</div>
+                            </div>
+                            <button class="btn btn-light btn-sm">グラフ種別</button>
+                        </div>
+                        <div class="card-body">
+                            <!-- ダミーグラフ (SVG) -->
+                            <svg viewBox="0 0 600 220" style="width:100%; height:220px;">
+                                <defs>
+                                    <linearGradient id="grad1" x1="0" x2="0" y1="0" y2="1">
+                                        <stop offset="0%" stop-color="#3577f1" stop-opacity="0.4"/>
+                                        <stop offset="100%" stop-color="#3577f1" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                                <g stroke="#e9ebec" stroke-dasharray="3,3">
+                                    <line x1="40" y1="40" x2="580" y2="40"/>
+                                    <line x1="40" y1="100" x2="580" y2="100"/>
+                                    <line x1="40" y1="160" x2="580" y2="160"/>
+                                </g>
+                                <g font-size="10" fill="#878a99">
+                                    <text x="10" y="44">100M</text>
+                                    <text x="10" y="104">50M</text>
+                                    <text x="10" y="164">0</text>
+                                </g>
+                                <path d="M40,130 L130,110 L220,90 L310,75 L400,70 L490,55 L580,50"
+                                      fill="none" stroke="#3577f1" stroke-width="2.5"/>
+                                <path d="M40,130 L130,110 L220,90 L310,75 L400,70 L490,55 L580,50 L580,200 L40,200 Z"
+                                      fill="url(#grad1)"/>
+                                <g fill="#3577f1">
+                                    <circle cx="40" cy="130" r="4"/>
+                                    <circle cx="130" cy="110" r="4"/>
+                                    <circle cx="220" cy="90" r="4"/>
+                                    <circle cx="310" cy="75" r="4"/>
+                                    <circle cx="400" cy="70" r="4"/>
+                                    <circle cx="490" cy="55" r="4"/>
+                                    <circle cx="580" cy="50" r="4"/>
+                                </g>
+                                <g font-size="10" fill="#878a99" text-anchor="middle">
+                                    <text x="40" y="215">11月</text>
+                                    <text x="130" y="215">12月</text>
+                                    <text x="220" y="215">1月</text>
+                                    <text x="310" y="215">2月</text>
+                                    <text x="400" y="215">3月</text>
+                                    <text x="490" y="215">4月</text>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h5 class="card-title">空室・募集状況</h5>
+                                <div class="card-subtitle">直近の募集対象</div>
+                            </div>
+                            <a href="#" class="fs-sm">募集管理へ</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th>物件</th><th>賃料</th><th>反響</th><th>状態</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>パークサイド渋谷 401<br><span class="text-muted fs-sm">1LDK / 38.5㎡</span></td>
+                                            <td>¥158,000</td>
+                                            <td>12件</td>
+                                            <td><span class="badge badge-soft-warning">内見調整中</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>グランデ目黒 203<br><span class="text-muted fs-sm">2DK / 45.2㎡</span></td>
+                                            <td>¥132,000</td>
+                                            <td>8件</td>
+                                            <td><span class="badge badge-soft-success">申込済</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>サンセット麻布 305<br><span class="text-muted fs-sm">1K / 25.8㎡</span></td>
+                                            <td>¥98,000</td>
+                                            <td>3件</td>
+                                            <td><span class="badge badge-soft-primary">募集中</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>リバーサイド品川 502<br><span class="text-muted fs-sm">2LDK / 52.1㎡</span></td>
+                                            <td>¥186,000</td>
+                                            <td>5件</td>
+                                            <td><span class="badge badge-soft-primary">募集中</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

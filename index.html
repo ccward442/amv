@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不動産物件管理システム - モックアップ一覧</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .portal-hero {
+            background: linear-gradient(135deg, #405189 0%, #3577f1 100%);
+            color: #fff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .portal-hero h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .portal-hero p { font-size: 0.9rem; opacity: 0.9; }
+        .portal-grid {
+            max-width: 1200px;
+            margin: -2rem auto 3rem;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        .portal-link {
+            display: block;
+            background: #fff;
+            padding: 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+            border-left: 3px solid var(--vz-primary);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .portal-link:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .portal-link .icon {
+            width: 40px; height: 40px;
+            border-radius: 8px;
+            background: rgba(53,119,241,0.1);
+            color: var(--vz-primary);
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .portal-link h3 { font-size: 0.9375rem; font-weight: 600; color: var(--vz-heading-color); margin-bottom: 0.3rem; }
+        .portal-link p { font-size: 0.75rem; color: var(--vz-muted-color); }
+        .portal-link .tag {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.625rem;
+            background: rgba(53,119,241,0.08);
+            color: var(--vz-primary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-hero">
+        <h1>🏢 不動産物件管理システム</h1>
+        <p>UIモックアップ一覧 / Phase 1 MVP - v0.1</p>
+    </div>
+
+    <div class="portal-grid">
+        <a href="login.html" class="portal-link">
+            <div class="icon">🔐</div>
+            <h3>ログイン</h3>
+            <p>システム認証画面 / MFA対応</p>
+            <span class="tag">認証</span>
+        </a>
+        <a href="dashboard.html" class="portal-link">
+            <div class="icon">📊</div>
+            <h3>ダッシュボード</h3>
+            <p>KPI・タスク・通知を一望</p>
+            <span class="tag">ホーム</span>
+        </a>
+        <a href="properties.html" class="portal-link">
+            <div class="icon">🏘️</div>
+            <h3>物件一覧</h3>
+            <p>建物・部屋の一括管理 (F-PR-08)</p>
+            <span class="tag">物件管理</span>
+        </a>
+        <a href="property-detail.html" class="portal-link">
+            <div class="icon">🏠</div>
+            <h3>物件詳細</h3>
+            <p>建物・部屋・設備・写真・契約</p>
+            <span class="tag">物件管理</span>
+        </a>
+        <a href="contracts.html" class="portal-link">
+            <div class="icon">📄</div>
+            <h3>契約一覧</h3>
+            <p>賃貸借契約の検索・管理 (F-CT)</p>
+            <span class="tag">契約管理</span>
+        </a>
+        <a href="invoices.html" class="portal-link">
+            <div class="icon">💴</div>
+            <h3>請求一覧</h3>
+            <p>月次請求・滞納管理 (F-BL)</p>
+            <span class="tag">請求管理</span>
+        </a>
+        <a href="payments.html" class="portal-link">
+            <div class="icon">🏦</div>
+            <h3>入金管理</h3>
+            <p>消込・オーナー送金 (F-PY)</p>
+            <span class="tag">入金管理</span>
+        </a>
+        <a href="inquiries.html" class="portal-link">
+            <div class="icon">💬</div>
+            <h3>問い合わせ管理</h3>
+            <p>SLA管理・対応履歴 (F-IQ)</p>
+            <span class="tag">問合せ</span>
+        </a>
+        <a href="repairs.html" class="portal-link">
+            <div class="icon">🔧</div>
+            <h3>修繕管理</h3>
+            <p>業者手配・見積・完了 (F-RP)</p>
+            <span class="tag">修繕</span>
+        </a>
+    </div>
+</body>
+</html>

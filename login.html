@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <div class="logo-icon">🏢</div>
+                <h2 style="font-size:1.125rem; font-weight:600; color:var(--vz-heading-color);">不動産物件管理システム</h2>
+                <p style="font-size:0.75rem; color:var(--vz-muted-color); margin-top:0.25rem;">Property Management Cloud</p>
+            </div>
+
+            <div class="auth-title">
+                <h2>ログイン</h2>
+                <p>アカウント情報を入力してください</p>
+            </div>
+
+            <form>
+                <div class="form-group">
+                    <label class="form-label" for="email">メールアドレス</label>
+                    <input type="email" id="email" class="form-control" placeholder="user@example.com" value="kanrisya@example.co.jp">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">パスワード</label>
+                    <input type="password" id="password" class="form-control" placeholder="********" value="password">
+                </div>
+
+                <div class="form-group d-flex align-center justify-between">
+                    <label class="checkbox-label">
+                        <input type="checkbox" checked> ログイン状態を保持
+                    </label>
+                    <a href="#" style="font-size:0.75rem;">パスワードを忘れた方</a>
+                </div>
+
+                <a href="dashboard.html" class="btn btn-primary w-100" style="justify-content:center;">ログイン</a>
+
+                <div class="alert alert-primary mt-4" style="font-size:0.75rem;">
+                    🔒 多要素認証(MFA)が有効です。次の画面でワンタイムパスワードを入力してください。
+                </div>
+            </form>
+
+            <div class="text-center mt-3" style="font-size:0.75rem; color:var(--vz-muted-color);">
+                ご利用にはアカウント発行が必要です。<br>
+                システム管理者にお問い合わせください。
+            </div>
+        </div>
+    </div>
+</body>
+</html>

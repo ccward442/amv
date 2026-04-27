@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修繕管理 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .kanban-board { display:grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+        .kanban-col { background: var(--vz-gray-100); border-radius:8px; padding:0.75rem; min-height:300px;}
+        .kanban-col h6 { font-size:0.8125rem; font-weight:600; margin-bottom:0.5rem; display:flex; justify-content:space-between; align-items:center;}
+        .kanban-card { background:#fff; border-radius:6px; padding:0.7rem; margin-bottom:0.5rem; box-shadow:0 1px 2px rgba(0,0,0,0.05); border-left:3px solid var(--vz-primary); cursor:pointer; transition:transform 0.15s;}
+        .kanban-card:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0,0,0,0.08);}
+        .kanban-card.warning { border-left-color: var(--vz-warning);}
+        .kanban-card.danger { border-left-color: var(--vz-danger);}
+        .kanban-card.success { border-left-color: var(--vz-success);}
+        .kanban-card.info { border-left-color: var(--vz-info);}
+        .kanban-card .title { font-size:0.8125rem; font-weight:500; margin-bottom:0.3rem;}
+        .kanban-card .meta { font-size:0.6875rem; color:var(--vz-muted-color); margin-bottom:0.25rem;}
+        .kanban-card .footer { display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem;}
+        .kanban-card .amount { font-weight:600; font-size:0.75rem;}
+        @media (max-width:1200px){ .kanban-board { grid-template-columns: repeat(2, 1fr);} }
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html" class="active"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="修繕案件・物件で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">管理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">修繕管理</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li>修繕管理</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">業者マスタ</button>
+                    <button class="btn btn-soft-primary btn-sm">📊 修繕履歴</button>
+                    <a href="#" class="btn btn-primary btn-sm">＋ 修繕案件起票</a>
+                </div>
+            </div>
+
+            <!-- KPI -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="kpi-card"><div><div class="kpi-label">対応中案件</div><div class="kpi-value">18<span class="kpi-unit">件</span></div></div><div class="kpi-icon">🔧</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card warning"><div><div class="kpi-label">オーナー承認待ち</div><div class="kpi-value">5<span class="kpi-unit">件</span></div><div class="kpi-delta down">¥730K</div></div><div class="kpi-icon">⏳</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card danger"><div><div class="kpi-label">緊急対応</div><div class="kpi-value">2<span class="kpi-unit">件</span></div><div class="kpi-delta down">漏水・鍵紛失</div></div><div class="kpi-icon">🚨</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card success"><div><div class="kpi-label">今月完了</div><div class="kpi-value">31<span class="kpi-unit">件</span></div><div class="kpi-delta">¥2.4M</div></div><div class="kpi-icon">✅</div></div>
+                </div>
+            </div>
+
+            <!-- 表示切替タブ -->
+            <div class="card">
+                <div class="card-header" style="padding-bottom:0;">
+                    <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
+                        <li><a href="#" class="active">📋 ボード</a></li>
+                        <li><a href="#">≡ 一覧</a></li>
+                        <li><a href="#">📅 カレンダー</a></li>
+                        <li><a href="#">🏗️ 業者管理</a></li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <!-- カンバンボード -->
+                    <div class="kanban-board">
+                        <!-- 起票 -->
+                        <div class="kanban-col">
+                            <h6>📥 起票 <span class="badge badge-soft-secondary">3</span></h6>
+                            <div class="kanban-card danger">
+                                <div class="d-flex justify-between mb-1">
+                                    <span class="badge badge-soft-danger">緊急</span>
+                                    <span class="meta">10分前</span>
+                                </div>
+                                <div class="title">エアコン水漏れ修繕</div>
+                                <div class="meta">グランデ目黒 305</div>
+                                <div class="footer">
+                                    <span class="badge badge-soft-warning">問合せ起点</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card">
+                                <div class="d-flex justify-between mb-1">
+                                    <span class="badge badge-soft-primary">通常</span>
+                                    <span class="meta">2日前</span>
+                                </div>
+                                <div class="title">玄関タイル張替</div>
+                                <div class="meta">サンセット麻布 (共用部)</div>
+                                <div class="footer">
+                                    <span class="badge badge-soft-info">巡回点検</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card">
+                                <div class="d-flex justify-between mb-1">
+                                    <span class="badge badge-soft-primary">通常</span>
+                                    <span class="meta">3日前</span>
+                                </div>
+                                <div class="title">ベランダ手すり塗装</div>
+                                <div class="meta">パークサイド渋谷 全戸</div>
+                                <div class="footer">
+                                    <span class="badge badge-soft-secondary">オーナー指示</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 見積依頼 -->
+                        <div class="kanban-col">
+                            <h6>📄 見積依頼中 <span class="badge badge-soft-secondary">4</span></h6>
+                            <div class="kanban-card info">
+                                <div class="meta">業者2社に依頼中</div>
+                                <div class="title">給湯器交換</div>
+                                <div class="meta">サンセット麻布 102</div>
+                                <div class="footer">
+                                    <span class="meta">期限: 4/29</span>
+                                    <span class="amount">見積待</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card info">
+                                <div class="meta">業者3社に依頼中</div>
+                                <div class="title">外壁クラック補修</div>
+                                <div class="meta">ヴィラ恵比寿</div>
+                                <div class="footer">
+                                    <span class="meta">期限: 5/2</span>
+                                    <span class="amount">見積待</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card info">
+                                <div class="meta">2社受領済 / 1社待ち</div>
+                                <div class="title">エントランス自動ドア修理</div>
+                                <div class="meta">セントラル新宿</div>
+                                <div class="footer">
+                                    <span class="meta">期限: 4/30</span>
+                                    <span class="amount">¥84,000〜</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 承認待ち -->
+                        <div class="kanban-col">
+                            <h6>⏳ 承認待ち <span class="badge badge-soft-warning">5</span></h6>
+                            <div class="kanban-card warning">
+                                <span class="badge badge-soft-warning">承認期限 本日</span>
+                                <div class="title mt-2">給湯器交換</div>
+                                <div class="meta">パークサイド渋谷 (共用部)</div>
+                                <div class="footer">
+                                    <span class="meta">業者: 渋谷設備工業</span>
+                                    <span class="amount">¥182,000</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card warning">
+                                <div class="meta">オーナー: 大和ファンド</div>
+                                <div class="title">外壁洗浄</div>
+                                <div class="meta">グランデ目黒</div>
+                                <div class="footer">
+                                    <span class="meta">業者: クリーン目黒</span>
+                                    <span class="amount">¥320,000</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card warning">
+                                <div class="meta">オーナー: 株式会社シティ品川</div>
+                                <div class="title">屋上防水工事</div>
+                                <div class="meta">リバーサイド品川</div>
+                                <div class="footer">
+                                    <span class="meta">業者: 防水技研</span>
+                                    <span class="amount">¥1,240,000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 施工中 -->
+                        <div class="kanban-col">
+                            <h6>🔨 施工中 <span class="badge badge-soft-primary">4</span></h6>
+                            <div class="kanban-card">
+                                <span class="badge badge-soft-success">本日訪問</span>
+                                <div class="title mt-2">エアコンクリーニング</div>
+                                <div class="meta">セントラル新宿 1108</div>
+                                <div class="footer">
+                                    <span class="meta">業者: クリーンライフ</span>
+                                    <span class="amount">¥18,000</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card">
+                                <div class="meta">5/1〜5/3 予定</div>
+                                <div class="title">壁紙張替 (退去後)</div>
+                                <div class="meta">パークサイド渋谷 301</div>
+                                <div class="footer">
+                                    <span class="meta">業者: 内装プロ渋谷</span>
+                                    <span class="amount">¥98,000</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card">
+                                <div class="meta">本日完了予定</div>
+                                <div class="title">水栓交換</div>
+                                <div class="meta">アーバン中野 503</div>
+                                <div class="footer">
+                                    <span class="meta">業者: 中野水道</span>
+                                    <span class="amount">¥24,000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 完了 -->
+                        <div class="kanban-col">
+                            <h6>✅ 完了 (今週) <span class="badge badge-soft-success">7</span></h6>
+                            <div class="kanban-card success">
+                                <span class="meta">4/26 完了</span>
+                                <div class="title mt-1">トイレ便座交換</div>
+                                <div class="meta">六本木プレミアム 401</div>
+                                <div class="footer">
+                                    <span class="badge badge-soft-success">入居者負担</span>
+                                    <span class="amount">¥32,000</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card success">
+                                <span class="meta">4/25 完了</span>
+                                <div class="title mt-1">電灯交換 (共用部)</div>
+                                <div class="meta">パークサイド渋谷</div>
+                                <div class="footer">
+                                    <span class="badge badge-soft-secondary">オーナー負担</span>
+                                    <span class="amount">¥12,000</span>
+                                </div>
+                            </div>
+                            <div class="kanban-card success">
+                                <span class="meta">4/24 完了</span>
+                                <div class="title mt-1">玄関ドアクローザー</div>
+                                <div class="meta">グランデ目黒 203</div>
+                                <div class="footer">
+                                    <span class="badge badge-soft-secondary">オーナー負担</span>
+                                    <span class="amount">¥28,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 業者ランキング -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">業者別 対応実績 (今月)</h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr><th>業者</th><th>得意分野</th><th>件数</th><th>金額</th><th>評価</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>渋谷設備工業</td><td>給排水・給湯</td><td>12件</td><td>¥1,240,000</td><td>★★★★★</td></tr>
+                                    <tr><td>関東エアコンサービス</td><td>空調</td><td>8件</td><td>¥320,000</td><td>★★★★☆</td></tr>
+                                    <tr><td>内装プロ渋谷</td><td>クロス・床</td><td>6件</td><td>¥580,000</td><td>★★★★★</td></tr>
+                                    <tr><td>クリーンライフ</td><td>清掃・クリーニング</td><td>15件</td><td>¥210,000</td><td>★★★★☆</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">費用区分別 修繕費 (4月)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-between mb-2"><span>オーナー負担</span><span class="fw-bold">¥1,580,000 (66%)</span></div>
+                            <div style="height:8px; background:var(--vz-gray-200); border-radius:4px; margin-bottom:1rem;">
+                                <div style="width:66%; background:var(--vz-secondary); height:100%; border-radius:4px;"></div>
+                            </div>
+                            <div class="d-flex justify-between mb-2"><span>入居者負担</span><span class="fw-bold">¥520,000 (22%)</span></div>
+                            <div style="height:8px; background:var(--vz-gray-200); border-radius:4px; margin-bottom:1rem;">
+                                <div style="width:22%; background:var(--vz-warning); height:100%; border-radius:4px;"></div>
+                            </div>
+                            <div class="d-flex justify-between mb-2"><span>自社負担</span><span class="fw-bold">¥298,000 (12%)</span></div>
+                            <div style="height:8px; background:var(--vz-gray-200); border-radius:4px;">
+                                <div style="width:12%; background:var(--vz-info); height:100%; border-radius:4px;"></div>
+                            </div>
+                            <div class="alert alert-primary mt-3" style="font-size:0.75rem;">
+                                ℹ️ 5万円以上はオーナー承認必須。緊急修繕(漏水・ガス・鍵紛失)は事前承認不要枠で運用。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

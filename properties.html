@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物件一覧 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html" class="active"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔁</span>原状回復</a></li>
+            <li class="menu-title">募集・分析</li>
+            <li><a href="#"><span class="menu-icon">📢</span>募集管理</a></li>
+            <li><a href="#"><span class="menu-icon">📈</span>レポート</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="物件名・住所で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <button class="header-icon-btn">✉️</button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">管理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">物件管理</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li>物件管理</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📥 CSV取込</button>
+                    <button class="btn btn-soft-primary btn-sm">📤 CSV出力</button>
+                    <a href="property-detail.html" class="btn btn-primary btn-sm">＋ 新規物件登録</a>
+                </div>
+            </div>
+
+            <!-- フィルタ -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div>
+                            <label class="form-label">エリア</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>東京都港区</option>
+                                <option>東京都渋谷区</option>
+                                <option>東京都目黒区</option>
+                                <option>東京都品川区</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">空室状況</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>空室あり</option>
+                                <option>満室</option>
+                                <option>募集停止</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">築年数</label>
+                            <select class="form-select">
+                                <option>指定なし</option>
+                                <option>10年以内</option>
+                                <option>20年以内</option>
+                                <option>30年以内</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">構造</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>RC造</option>
+                                <option>SRC造</option>
+                                <option>木造</option>
+                                <option>鉄骨造</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">家賃帯</label>
+                            <div class="d-flex gap-2 align-center">
+                                <input class="form-control" placeholder="下限" style="font-size:0.8125rem;">
+                                <span>〜</span>
+                                <input class="form-control" placeholder="上限" style="font-size:0.8125rem;">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">管理形態</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>一般管理</option>
+                                <option>サブリース</option>
+                                <option>集金代行</option>
+                                <option>自主管理</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-end gap-2 mt-3">
+                        <button class="btn btn-light btn-sm">クリア</button>
+                        <button class="btn btn-primary btn-sm">🔍 絞り込み</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 表示切替 -->
+            <div class="d-flex justify-between align-center mb-3">
+                <div class="text-muted fs-sm">表示中: <span class="fw-bold" style="color:var(--vz-heading-color);">142</span> 物件 / 1,248戸</div>
+                <div class="d-flex gap-2 align-center">
+                    <span class="text-muted fs-sm">並び替え:</span>
+                    <select class="form-select" style="width:auto;">
+                        <option>登録日(新しい順)</option>
+                        <option>物件名</option>
+                        <option>築年数</option>
+                        <option>戸数</option>
+                    </select>
+                    <div style="display:flex; border:1px solid var(--vz-border-color); border-radius:4px;">
+                        <button class="btn btn-sm" style="border-radius:0; background:var(--vz-primary); color:#fff;" title="カード表示">▦</button>
+                        <button class="btn btn-sm btn-light" style="border-radius:0; border:none;" title="一覧表示">≡</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 物件カード -->
+            <div class="row">
+                <div class="col-3">
+                    <a href="property-detail.html" style="text-decoration:none; color:inherit;">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#5b8def,#3577f1);">
+                            🏢
+                            <span class="occupancy-tag">入居率 95%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">パークサイド渋谷</div>
+                            <div class="property-addr">東京都渋谷区代々木1-2-3</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">RC造</span>
+                                <span class="badge badge-soft-secondary">一般管理</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 24戸 (空室1)</span>
+                                <span>📅 築12年</span>
+                                <span>🏗️ 8階建</span>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#0ab39c,#089580);">
+                            🏬
+                            <span class="occupancy-tag">入居率 100%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">グランデ目黒</div>
+                            <div class="property-addr">東京都目黒区目黒3-15-7</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">SRC造</span>
+                                <span class="badge badge-soft-warning">サブリース</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 36戸 (満室)</span>
+                                <span>📅 築8年</span>
+                                <span>🏗️ 12階建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#f7b84b,#e69a1f);">
+                            🏠
+                            <span class="occupancy-tag">入居率 88%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">サンセット麻布</div>
+                            <div class="property-addr">東京都港区麻布十番2-8-9</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">RC造</span>
+                                <span class="badge badge-soft-secondary">一般管理</span>
+                                <span class="badge badge-soft-danger">滞納あり</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 16戸 (空室2)</span>
+                                <span>📅 築22年</span>
+                                <span>🏗️ 5階建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#299cdb,#1d80b5);">
+                            🌊
+                            <span class="occupancy-tag">入居率 92%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">リバーサイド品川</div>
+                            <div class="property-addr">東京都品川区東品川4-12-3</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">SRC造</span>
+                                <span class="badge badge-soft-secondary">一般管理</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 48戸 (空室4)</span>
+                                <span>📅 築6年</span>
+                                <span>🏗️ 15階建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#878a99,#495057);">
+                            🏯
+                            <span class="occupancy-tag">入居率 80%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">ヴィラ恵比寿</div>
+                            <div class="property-addr">東京都渋谷区恵比寿2-5-1</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">木造</span>
+                                <span class="badge badge-soft-info">集金代行</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 5戸 (空室1)</span>
+                                <span>📅 築28年</span>
+                                <span>🏗️ 2階建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#f06548,#cc4528);">
+                            🏛️
+                            <span class="occupancy-tag">入居率 100%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">六本木プレミアム</div>
+                            <div class="property-addr">東京都港区六本木7-2-3</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">RC造</span>
+                                <span class="badge badge-soft-warning">サブリース</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 18戸 (満室)</span>
+                                <span>📅 築5年</span>
+                                <span>🏗️ 6階建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#405189,#2c3a66);">
+                            🏤
+                            <span class="occupancy-tag">入居率 96%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">セントラル新宿</div>
+                            <div class="property-addr">東京都新宿区西新宿6-10-1</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">SRC造</span>
+                                <span class="badge badge-soft-secondary">一般管理</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 52戸 (空室2)</span>
+                                <span>📅 築10年</span>
+                                <span>🏗️ 18階建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="property-card">
+                        <div class="property-thumb" style="background:linear-gradient(135deg,#b681e1,#8a52c0);">
+                            🏨
+                            <span class="occupancy-tag">入居率 90%</span>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-name">アーバン中野</div>
+                            <div class="property-addr">東京都中野区中野3-8-12</div>
+                            <div class="d-flex gap-2 align-center mb-2">
+                                <span class="badge badge-soft-primary">鉄骨造</span>
+                                <span class="badge badge-soft-secondary">一般管理</span>
+                            </div>
+                            <div class="property-meta">
+                                <span>🚪 20戸 (空室2)</span>
+                                <span>📅 築15年</span>
+                                <span>🏗️ 7階建</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ページネーション -->
+            <div class="card mt-3">
+                <ul class="pagination">
+                    <li><a href="#">«</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">…</a></li>
+                    <li><a href="#">18</a></li>
+                    <li><a href="#">»</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>契約一覧 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="contracts.html" class="active"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="契約者名・物件で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">管理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">契約管理</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li>契約管理</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📤 CSV出力</button>
+                    <button class="btn btn-soft-primary btn-sm">📋 重要事項説明書</button>
+                    <a href="#" class="btn btn-primary btn-sm">＋ 新規契約</a>
+                </div>
+            </div>
+
+            <!-- KPI -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="kpi-card">
+                        <div>
+                            <div class="kpi-label">有効契約数</div>
+                            <div class="kpi-value">1,176<span class="kpi-unit">件</span></div>
+                        </div>
+                        <div class="kpi-icon">📄</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card warning">
+                        <div>
+                            <div class="kpi-label">3ヶ月以内更新</div>
+                            <div class="kpi-value">42<span class="kpi-unit">件</span></div>
+                            <div class="kpi-delta down">通知未送付 4件</div>
+                        </div>
+                        <div class="kpi-icon">🔄</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card info">
+                        <div>
+                            <div class="kpi-label">解約予告</div>
+                            <div class="kpi-value">8<span class="kpi-unit">件</span></div>
+                        </div>
+                        <div class="kpi-icon">🚪</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card success">
+                        <div>
+                            <div class="kpi-label">今月締結</div>
+                            <div class="kpi-value">12<span class="kpi-unit">件</span></div>
+                            <div class="kpi-delta">▲ 3件 (前月比)</div>
+                        </div>
+                        <div class="kpi-icon">🖋️</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- フィルタ -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div>
+                            <label class="form-label">ステータス</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>有効</option>
+                                <option>更新待ち</option>
+                                <option>解約予告中</option>
+                                <option>期限切れ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">契約満了</label>
+                            <select class="form-select">
+                                <option>指定なし</option>
+                                <option>1ヶ月以内</option>
+                                <option>3ヶ月以内</option>
+                                <option>6ヶ月以内</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">物件</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>パークサイド渋谷</option>
+                                <option>グランデ目黒</option>
+                                <option>サンセット麻布</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">入居者種別</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>個人</option>
+                                <option>法人</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">保証会社</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>日本セーフティ</option>
+                                <option>Casa</option>
+                                <option>全保連</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">滞納</label>
+                            <select class="form-select">
+                                <option>すべて</option>
+                                <option>滞納あり</option>
+                                <option>滞納なし</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- テーブル -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">契約一覧</h5>
+                    <div class="text-muted fs-sm">1,176件 中 50件表示</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>契約番号</th>
+                                <th>物件 / 部屋</th>
+                                <th>契約者</th>
+                                <th>賃料</th>
+                                <th>契約期間</th>
+                                <th>更新</th>
+                                <th>保証会社</th>
+                                <th>状態</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2024-0421</a></td>
+                                <td>パークサイド渋谷 101</td>
+                                <td>佐々木 健太 (個人)</td>
+                                <td>¥160,000</td>
+                                <td>2025/03 - 2027/02</td>
+                                <td>10ヶ月後</td>
+                                <td>日本セーフティ</td>
+                                <td><span class="badge badge-soft-success">有効</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2024-0388</a></td>
+                                <td>パークサイド渋谷 301</td>
+                                <td>佐藤 麻衣 (個人)</td>
+                                <td>¥177,000</td>
+                                <td>2024/05 - 2026/04</td>
+                                <td>解約予告中</td>
+                                <td>Casa</td>
+                                <td><span class="badge badge-soft-info">退去予定 4/30</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2024-0291</a></td>
+                                <td>サンセット麻布 102</td>
+                                <td>田中 一郎 (個人)</td>
+                                <td>¥98,000</td>
+                                <td>2024/02 - 2026/01</td>
+                                <td>更新待ち</td>
+                                <td>日本セーフティ</td>
+                                <td><span class="badge badge-soft-danger">滞納2ヶ月</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2024-0512</a></td>
+                                <td>グランデ目黒 503</td>
+                                <td>株式会社XYZ商事 (法人)</td>
+                                <td>¥210,000</td>
+                                <td>2024/06 - 2026/05</td>
+                                <td>1ヶ月後</td>
+                                <td>—</td>
+                                <td><span class="badge badge-soft-warning">更新通知済</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2025-0033</a></td>
+                                <td>リバーサイド品川 502</td>
+                                <td>鈴木 由美子 (個人)</td>
+                                <td>¥186,000</td>
+                                <td>2025/01 - 2027/12</td>
+                                <td>20ヶ月後</td>
+                                <td>全保連</td>
+                                <td><span class="badge badge-soft-success">有効</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2024-0118</a></td>
+                                <td>ヴィラ恵比寿 201</td>
+                                <td>高橋 翔 (個人)</td>
+                                <td>¥125,000</td>
+                                <td>2024/01 - 2025/12</td>
+                                <td>8ヶ月後</td>
+                                <td>Casa</td>
+                                <td><span class="badge badge-soft-success">有効</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2024-0399</a></td>
+                                <td>六本木プレミアム 805</td>
+                                <td>株式会社グローバルコンサル (法人)</td>
+                                <td>¥325,000</td>
+                                <td>2024/04 - 2027/03</td>
+                                <td>11ヶ月後</td>
+                                <td>—</td>
+                                <td><span class="badge badge-soft-success">有効</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><a href="#">CT-2025-0089</a></td>
+                                <td>セントラル新宿 1108</td>
+                                <td>渡辺 大輔 (個人)</td>
+                                <td>¥198,000</td>
+                                <td>2025/03 - 2027/02</td>
+                                <td>10ヶ月後</td>
+                                <td>日本セーフティ</td>
+                                <td><span class="badge badge-soft-success">有効</span></td>
+                                <td><button class="table-action-btn">👁️</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="pagination">
+                    <li><a href="#">«</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">…</a></li>
+                    <li><a href="#">24</a></li>
+                    <li><a href="#">»</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

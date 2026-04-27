@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請求管理 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html" class="active"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="請求番号・契約者で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">管理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">請求管理</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li>請求管理</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📥 督促書一括出力</button>
+                    <button class="btn btn-soft-warning btn-sm">⚙️ 月次請求生成</button>
+                    <a href="#" class="btn btn-primary btn-sm">＋ 随時請求</a>
+                </div>
+            </div>
+
+            <!-- アラート -->
+            <div class="alert alert-warning">
+                ⚠️ <strong>滞納2ヶ月の契約が3件あります。</strong>保証会社への代位弁済請求の起票を推奨します。
+                <a href="#" style="color:inherit; text-decoration:underline; margin-left:0.5rem;">対象を確認</a>
+            </div>
+
+            <!-- KPI -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="kpi-card">
+                        <div>
+                            <div class="kpi-label">今月請求総額</div>
+                            <div class="kpi-value">¥86.4<span class="kpi-unit">M</span></div>
+                            <div class="kpi-delta">▲ ¥1.8M (前月比)</div>
+                        </div>
+                        <div class="kpi-icon">💴</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card success">
+                        <div>
+                            <div class="kpi-label">入金済</div>
+                            <div class="kpi-value">¥81.9<span class="kpi-unit">M</span></div>
+                            <div class="kpi-delta">94.8% 回収</div>
+                        </div>
+                        <div class="kpi-icon">✅</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card warning">
+                        <div>
+                            <div class="kpi-label">未収金</div>
+                            <div class="kpi-value">¥4.5<span class="kpi-unit">M</span></div>
+                            <div class="kpi-delta down">23件 / 30日 8件・60日 9件・90日 6件</div>
+                        </div>
+                        <div class="kpi-icon">⏳</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card danger">
+                        <div>
+                            <div class="kpi-label">法的措置検討</div>
+                            <div class="kpi-value">2<span class="kpi-unit">件</span></div>
+                            <div class="kpi-delta down">90日超 滞納</div>
+                        </div>
+                        <div class="kpi-icon">⚖️</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ -->
+            <div class="card">
+                <div class="card-header" style="padding-bottom:0;">
+                    <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
+                        <li><a href="#" class="active">請求一覧 (1,210)</a></li>
+                        <li><a href="#">滞納管理 (23)</a></li>
+                        <li><a href="#">督促履歴</a></li>
+                        <li><a href="#">請求項目マスタ</a></li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="d-flex gap-2 flex-wrap mb-3">
+                        <select class="form-select" style="width:auto;">
+                            <option>2026年4月</option>
+                            <option>2026年3月</option>
+                            <option>2026年5月 (予定)</option>
+                        </select>
+                        <select class="form-select" style="width:auto;">
+                            <option>状態: すべて</option>
+                            <option>未入金</option>
+                            <option>一部入金</option>
+                            <option>入金済</option>
+                            <option>滞納中</option>
+                        </select>
+                        <select class="form-select" style="width:auto;">
+                            <option>督促ステータス</option>
+                            <option>初期未納</option>
+                            <option>1次督促</option>
+                            <option>2次督促</option>
+                            <option>3次督促 / 内容証明</option>
+                        </select>
+                        <button class="btn btn-light btn-sm">クリア</button>
+                        <div style="flex:1;"></div>
+                        <button class="btn btn-soft-primary btn-sm">📋 一括PDF出力</button>
+                        <button class="btn btn-soft-success btn-sm">✉️ 一括メール送付</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>請求番号</th>
+                                    <th>請求月</th>
+                                    <th>契約者 / 物件</th>
+                                    <th>請求額</th>
+                                    <th>入金額</th>
+                                    <th>残額</th>
+                                    <th>支払期限</th>
+                                    <th>督促</th>
+                                    <th>状態</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">INV-2026-04-0421</a></td>
+                                    <td>2026/04</td>
+                                    <td>佐々木 健太<br><span class="text-muted fs-sm">パークサイド渋谷 101</span></td>
+                                    <td>¥168,000</td>
+                                    <td>¥168,000</td>
+                                    <td>¥0</td>
+                                    <td>2026/04/27</td>
+                                    <td>—</td>
+                                    <td><span class="badge badge-soft-success">入金済</span></td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">INV-2026-04-0291</a></td>
+                                    <td>2026/04</td>
+                                    <td>田中 一郎<br><span class="text-muted fs-sm">サンセット麻布 102</span></td>
+                                    <td>¥104,000</td>
+                                    <td>¥0</td>
+                                    <td style="color:var(--vz-danger); font-weight:600;">¥104,000</td>
+                                    <td>2026/04/27</td>
+                                    <td><span class="badge badge-soft-danger">3次督促</span></td>
+                                    <td><span class="badge badge-soft-danger">滞納2ヶ月</span></td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">INV-2026-04-0388</a></td>
+                                    <td>2026/04</td>
+                                    <td>佐藤 麻衣<br><span class="text-muted fs-sm">パークサイド渋谷 301</span></td>
+                                    <td>¥186,000</td>
+                                    <td>¥186,000</td>
+                                    <td>¥0</td>
+                                    <td>2026/04/27</td>
+                                    <td>—</td>
+                                    <td><span class="badge badge-soft-success">入金済</span></td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">INV-2026-04-0512</a></td>
+                                    <td>2026/04</td>
+                                    <td>株式会社XYZ商事<br><span class="text-muted fs-sm">グランデ目黒 503</span></td>
+                                    <td>¥220,000</td>
+                                    <td>¥100,000</td>
+                                    <td style="color:var(--vz-warning); font-weight:600;">¥120,000</td>
+                                    <td>2026/04/27</td>
+                                    <td><span class="badge badge-soft-warning">1次督促</span></td>
+                                    <td><span class="badge badge-soft-warning">一部入金</span></td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">INV-2026-04-0712</a></td>
+                                    <td>2026/04</td>
+                                    <td>山田 美咲<br><span class="text-muted fs-sm">パークサイド渋谷 102</span></td>
+                                    <td>¥114,000</td>
+                                    <td>¥114,000</td>
+                                    <td>¥0</td>
+                                    <td>2026/04/27</td>
+                                    <td>—</td>
+                                    <td><span class="badge badge-soft-success">入金済</span></td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">INV-2026-04-0820</a></td>
+                                    <td>2026/04</td>
+                                    <td>鈴木 由美子<br><span class="text-muted fs-sm">リバーサイド品川 502</span></td>
+                                    <td>¥194,000</td>
+                                    <td>¥0</td>
+                                    <td style="color:var(--vz-danger); font-weight:600;">¥194,000</td>
+                                    <td>2026/04/27</td>
+                                    <td><span class="badge badge-soft-warning">1次督促</span></td>
+                                    <td><span class="badge badge-soft-danger">滞納1ヶ月</span></td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">INV-2026-04-0901</a></td>
+                                    <td>2026/04</td>
+                                    <td>株式会社グローバルコンサル<br><span class="text-muted fs-sm">六本木プレミアム 805</span></td>
+                                    <td>¥340,000</td>
+                                    <td>¥340,000</td>
+                                    <td>¥0</td>
+                                    <td>2026/04/27</td>
+                                    <td>—</td>
+                                    <td><span class="badge badge-soft-success">入金済</span></td>
+                                    <td><button class="table-action-btn">👁️</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <ul class="pagination">
+                    <li><a href="#">«</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">…</a></li>
+                    <li><a href="#">25</a></li>
+                    <li><a href="#">»</a></li>
+                </ul>
+            </div>
+
+            <!-- インボイス対応注記 -->
+            <div class="alert alert-primary">
+                ℹ️ 発行する請求書はインボイス制度(適格請求書)に対応しています。電子帳簿保存法対応のためタイムスタンプを自動付与し、改ざん防止保管されます。
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>
