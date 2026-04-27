@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新管理 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .stage-bar { display:grid; grid-template-columns: repeat(3, 1fr); gap:0.75rem; margin-bottom:1.25rem; }
+        .stage-card { background:#fff; border-radius:8px; padding:1rem; box-shadow:var(--vz-card-box-shadow); border-top:3px solid var(--vz-info);}
+        .stage-card.warn { border-top-color:var(--vz-warning); }
+        .stage-card.danger { border-top-color:var(--vz-danger); }
+        .stage-card .lead { font-size:0.75rem; color:var(--vz-muted-color); text-transform:uppercase; letter-spacing:0.04em; font-weight:600;}
+        .stage-card .num { font-size:1.5rem; font-weight:700; color:var(--vz-heading-color); margin:0.25rem 0;}
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="listings.html"><span class="menu-icon">📢</span>募集管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="renewals.html" class="active"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="restoration.html"><span class="menu-icon">🔁</span>原状回復</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li><a href="owner-reports.html"><span class="menu-icon">📑</span>オーナー報告</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="契約者・物件で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">管理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">更新管理</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li>更新管理</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📥 解約予告 受領</button>
+                    <button class="btn btn-soft-primary btn-sm">📋 更新通知書 一括出力</button>
+                    <button class="btn btn-primary btn-sm">＋ 更新条件登録</button>
+                </div>
+            </div>
+
+            <!-- 法令アラート -->
+            <div class="alert alert-warning">
+                ⚠️ <strong>定期借家 終了通知の期限が迫っています。</strong>
+                契約期間1年以上の定期借家は、満了日の<strong>1年〜6ヶ月前</strong>に終了通知を出さないと終了主張ができません(借地借家法38条4項)。対象 3件
+                <a href="#" style="color:inherit; text-decoration:underline; margin-left:0.5rem;">対象を確認</a>
+            </div>
+
+            <!-- 3段階アラート -->
+            <div class="stage-bar">
+                <div class="stage-card">
+                    <div class="lead">📅 6ヶ月前 アラート</div>
+                    <div class="num">42<span class="kpi-unit" style="font-size:0.875rem;color:var(--vz-muted-color);"> 件</span></div>
+                    <div class="text-muted fs-sm">更新条件の検討開始</div>
+                    <div class="d-flex gap-1 mt-2">
+                        <span class="badge badge-soft-secondary">普通借家 38</span>
+                        <span class="badge badge-soft-info">定期借家 4</span>
+                    </div>
+                </div>
+                <div class="stage-card warn">
+                    <div class="lead">📅 3ヶ月前 アラート</div>
+                    <div class="num">18<span class="kpi-unit" style="font-size:0.875rem;color:var(--vz-muted-color);"> 件</span></div>
+                    <div class="text-muted fs-sm">更新通知書 送付推奨</div>
+                    <div class="d-flex gap-1 mt-2">
+                        <span class="badge badge-soft-warning">通知未送付 4</span>
+                        <span class="badge badge-soft-success">通知済 14</span>
+                    </div>
+                </div>
+                <div class="stage-card danger">
+                    <div class="lead">📅 1ヶ月前 アラート</div>
+                    <div class="num">7<span class="kpi-unit" style="font-size:0.875rem;color:var(--vz-muted-color);"> 件</span></div>
+                    <div class="text-muted fs-sm">最終確認・契約締結</div>
+                    <div class="d-flex gap-1 mt-2">
+                        <span class="badge badge-soft-danger">解約予告未提出 1</span>
+                        <span class="badge badge-soft-warning">合意待ち 2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="kpi-card success"><div><div class="kpi-label">今月更新済</div><div class="kpi-value">14<span class="kpi-unit">件</span></div></div><div class="kpi-icon">✅</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card info"><div><div class="kpi-label">解約予告</div><div class="kpi-value">8<span class="kpi-unit">件</span></div><div class="kpi-delta down">退去予定 4-6月</div></div><div class="kpi-icon">🚪</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card warning"><div><div class="kpi-label">解約予告未提出</div><div class="kpi-value">1<span class="kpi-unit">件</span></div><div class="kpi-delta down">退去日まで14日</div></div><div class="kpi-icon">⏰</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card"><div><div class="kpi-label">更新料 今月</div><div class="kpi-value">¥1.92<span class="kpi-unit">M</span></div></div><div class="kpi-icon">💴</div></div>
+                </div>
+            </div>
+
+            <!-- タブ -->
+            <div class="card">
+                <div class="card-header" style="padding-bottom:0;">
+                    <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
+                        <li><a href="#" class="active">更新対象一覧 (67)</a></li>
+                        <li><a href="#">解約予告 (8)</a></li>
+                        <li><a href="#">定期借家 終了通知 (4)</a></li>
+                        <li><a href="#">更新履歴</a></li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="d-flex gap-2 flex-wrap mb-3">
+                        <select class="form-select" style="width:auto;">
+                            <option>満了月: すべて</option>
+                            <option>2026年5月</option>
+                            <option>2026年6月</option>
+                            <option>2026年7月</option>
+                        </select>
+                        <select class="form-select" style="width:auto;">
+                            <option>契約形態: すべて</option>
+                            <option>普通借家</option>
+                            <option>定期借家</option>
+                            <option>サブリース</option>
+                        </select>
+                        <select class="form-select" style="width:auto;">
+                            <option>通知ステータス</option>
+                            <option>未送付</option>
+                            <option>送付済</option>
+                            <option>合意済</option>
+                            <option>異議受付</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>契約番号</th>
+                                    <th>物件 / 部屋</th>
+                                    <th>契約者</th>
+                                    <th>契約形態</th>
+                                    <th>満了日</th>
+                                    <th>残期間</th>
+                                    <th>更新料</th>
+                                    <th>賃料改定</th>
+                                    <th>連帯保証</th>
+                                    <th>火災保険</th>
+                                    <th>ステータス</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">CT-2024-0512</a></td>
+                                    <td>グランデ目黒 503</td>
+                                    <td>株式会社XYZ商事</td>
+                                    <td><span class="badge badge-soft-secondary">普通借家</span></td>
+                                    <td>2026/05/31</td>
+                                    <td><span style="color:var(--vz-danger);">1ヶ月</span></td>
+                                    <td>¥210,000</td>
+                                    <td>据置</td>
+                                    <td><span class="badge badge-soft-success">極度額OK</span></td>
+                                    <td><span class="badge badge-soft-warning">満期30日後</span></td>
+                                    <td><span class="badge badge-soft-warning">通知済 / 合意待ち</span></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">CT-2024-0118</a></td>
+                                    <td>ヴィラ恵比寿 201</td>
+                                    <td>高橋 翔</td>
+                                    <td><span class="badge badge-soft-secondary">普通借家</span></td>
+                                    <td>2026/06/30</td>
+                                    <td>2ヶ月</td>
+                                    <td>¥125,000</td>
+                                    <td>+¥3,000提案</td>
+                                    <td><span class="badge badge-soft-danger">極度額未設定</span></td>
+                                    <td><span class="badge badge-soft-success">継続OK</span></td>
+                                    <td><span class="badge badge-soft-primary">通知済</span></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">CT-2024-0399</a></td>
+                                    <td>六本木プレミアム 805</td>
+                                    <td>株式会社グローバルコンサル</td>
+                                    <td><span class="badge badge-soft-info">定期借家</span></td>
+                                    <td>2027/03/31</td>
+                                    <td>11ヶ月</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td><span class="badge badge-soft-success">継続OK</span></td>
+                                    <td><span class="badge badge-soft-danger">⚠️ 終了通知期限間近</span></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">CT-2025-0033</a></td>
+                                    <td>リバーサイド品川 502</td>
+                                    <td>鈴木 由美子</td>
+                                    <td><span class="badge badge-soft-secondary">普通借家</span></td>
+                                    <td>2026/07/31</td>
+                                    <td>3ヶ月</td>
+                                    <td>¥186,000</td>
+                                    <td>据置</td>
+                                    <td><span class="badge badge-soft-success">極度額OK</span></td>
+                                    <td><span class="badge badge-soft-success">継続OK</span></td>
+                                    <td><span class="badge badge-soft-warning">通知未送付</span></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">CT-2024-0388</a></td>
+                                    <td>パークサイド渋谷 301</td>
+                                    <td>佐藤 麻衣</td>
+                                    <td><span class="badge badge-soft-secondary">普通借家</span></td>
+                                    <td>2026/04/30</td>
+                                    <td><span style="color:var(--vz-danger);">3日</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td><span class="badge badge-soft-info">解約予告 受領済</span></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><a href="#">CT-2024-0421</a></td>
+                                    <td>パークサイド渋谷 101</td>
+                                    <td>佐々木 健太</td>
+                                    <td><span class="badge badge-soft-secondary">普通借家</span></td>
+                                    <td>2027/02/28</td>
+                                    <td>10ヶ月</td>
+                                    <td>¥160,000</td>
+                                    <td>+¥5,000提案</td>
+                                    <td><span class="badge badge-soft-success">極度額OK</span></td>
+                                    <td><span class="badge badge-soft-success">継続OK</span></td>
+                                    <td><span class="badge badge-soft-secondary">条件検討中</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 注記 -->
+            <div class="alert alert-primary">
+                ℹ️ <strong>連帯保証人 極度額の確認:</strong> 2020年4月以降の民法改正により、個人連帯保証人は<strong>極度額の設定が必須</strong>です。極度額未設定の更新契約は無効となるため、必ず再設定してください。
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

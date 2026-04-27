@@ -24,11 +24,14 @@
             <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
             <li class="menu-title">物件・契約</li>
             <li><a href="properties.html" class="active"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="listings.html"><span class="menu-icon">📢</span>募集管理</a></li>
             <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
-            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="renewals.html"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="restoration.html"><span class="menu-icon">🔁</span>原状回復</a></li>
             <li class="menu-title">財務</li>
             <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
             <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li><a href="owner-reports.html"><span class="menu-icon">📑</span>オーナー報告</a></li>
             <li class="menu-title">対応・修繕</li>
             <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
             <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
@@ -73,10 +76,11 @@
                     <div class="d-flex gap-3 flex-wrap" style="align-items:flex-start;">
                         <div style="width:200px; height:140px; border-radius:6px; background:linear-gradient(135deg,#5b8def,#3577f1); display:flex; align-items:center; justify-content:center; font-size:3rem; color:rgba(255,255,255,0.9);">🏢</div>
                         <div style="flex:1; min-width:280px;">
-                            <div class="d-flex gap-2 mb-2">
+                            <div class="d-flex gap-2 mb-2 flex-wrap">
                                 <span class="badge badge-soft-success">入居率 95.8%</span>
                                 <span class="badge badge-soft-primary">RC造</span>
-                                <span class="badge badge-soft-secondary">一般管理</span>
+                                <span class="badge badge-soft-secondary">一般管理 (集金代行)</span>
+                                <span class="badge badge-soft-info">業務管理者: 木村</span>
                             </div>
                             <h3 style="font-size:1.125rem; margin-bottom:0.4rem;">パークサイド渋谷</h3>
                             <div class="text-muted fs-sm mb-2">📍 東京都渋谷区代々木1-2-3 (山手線「代々木」駅 徒歩4分)</div>
@@ -109,8 +113,10 @@
                     <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
                         <li><a href="#" class="active">基本情報</a></li>
                         <li><a href="#">部屋一覧 (24)</a></li>
+                        <li><a href="#">駐車区画 (12)</a></li>
+                        <li><a href="#">ハザード / 法令</a></li>
                         <li><a href="#">設備履歴</a></li>
-                        <li><a href="#">写真・図面</a></li>
+                        <li><a href="#">写真・図面・書類</a></li>
                         <li><a href="#">契約 (23)</a></li>
                         <li><a href="#">修繕履歴 (8)</a></li>
                         <li><a href="#">問合せ (3)</a></li>
@@ -133,6 +139,23 @@
                             <div class="info-row"><div class="info-label">総戸数</div><div>24戸</div></div>
                             <div class="info-row"><div class="info-label">駐車場</div><div>機械式 12台 (空1)</div></div>
                             <div class="info-row"><div class="info-label">敷地面積 / 延床面積</div><div>682.5㎡ / 1,820.4㎡</div></div>
+                            <div class="info-row"><div class="info-label">用途地域</div><div>第一種住居地域</div></div>
+                            <div class="info-row"><div class="info-label">防火地域</div><div>準防火地域</div></div>
+                            <div class="info-row"><div class="info-label">建ぺい率 / 容積率</div><div>60% / 200%</div></div>
+                            <div class="info-row"><div class="info-label">土地権利</div><div>所有権</div></div>
+                            <div class="info-row"><div class="info-label">建築確認 / 検査済証</div><div>第HK24-0123号 / あり</div></div>
+                            <div class="info-row"><div class="info-label">耐震診断</div><div>新耐震基準 適合</div></div>
+                            <div class="info-row"><div class="info-label">アスベスト調査</div><div>非含有 (2014年調査)</div></div>
+                            <div class="info-row"><div class="info-label">設備</div><div>オートロック ✓ / 宅配ボックス ✓ / 防犯カメラ ✓ / TVモニター ✓ / EV ✓</div></div>
+                            <div class="info-row"><div class="info-label" style="color:var(--vz-warning);">⚠️ ハザード情報</div>
+                                <div>
+                                    <span class="badge badge-soft-success">洪水: 該当なし</span>
+                                    <span class="badge badge-soft-success">土砂: 該当なし</span>
+                                    <span class="badge badge-soft-success">津波: 該当なし</span>
+                                    <span class="badge badge-soft-warning">内水: 0.5m未満</span><br>
+                                    <span class="text-muted fs-sm">※宅建業法上 重要事項説明 必須項目 (2020年8月〜)</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-6">
                             <h5 class="card-title mb-3">オーナー / 管理委託</h5>
@@ -146,6 +169,9 @@
                             <div class="info-row"><div class="info-label">PMフィー</div><div>賃料収入の 5.0% (税別)</div></div>
                             <div class="info-row"><div class="info-label">委託契約期間</div><div>2024/04/01 〜 2027/03/31 <span class="badge badge-soft-success">自動更新</span></div></div>
                             <div class="info-row"><div class="info-label">承認閾値</div><div>修繕5万円以上はオーナー承認必須</div></div>
+                            <div class="info-row"><div class="info-label">インボイス登録番号</div><div>T1234567890123 (適格事業者)</div></div>
+                            <div class="info-row"><div class="info-label">分別管理口座</div><div>みずほ 渋谷 普通 9876543 (預り金)<br><span class="text-muted fs-sm">賃貸住宅管理業法 第16条 対応</span></div></div>
+                            <div class="info-row"><div class="info-label">業務管理者承認</div><div>木村 大輔 (業務管理者) / 賃貸不動産経営管理士</div></div>
                         </div>
                     </div>
 

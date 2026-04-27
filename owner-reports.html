@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オーナー報告 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .legal-note { background: linear-gradient(135deg, rgba(247,184,75,0.1), rgba(247,184,75,0.05)); border-left:3px solid var(--vz-warning); padding:0.85rem 1rem; border-radius:6px;}
+        .doc-card { background:#fff; border:1px solid var(--vz-border-color); border-radius:8px; padding:1rem; transition:all 0.15s; cursor:pointer;}
+        .doc-card:hover { border-color:var(--vz-primary); transform: translateY(-2px); box-shadow: var(--vz-card-box-shadow-lg);}
+        .doc-card .icon { width:42px; height:42px; border-radius:8px; background: rgba(53,119,241,0.1); color:var(--vz-primary); display:inline-flex; align-items:center; justify-content:center; font-size:1.25rem; margin-bottom:0.5rem;}
+        .doc-card.legal .icon { background: rgba(247,184,75,0.18); color:#c08a2c;}
+        .doc-card.success .icon { background: rgba(10,179,156,0.12); color:var(--vz-success);}
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="listings.html"><span class="menu-icon">📢</span>募集管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="renewals.html"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="restoration.html"><span class="menu-icon">🔁</span>原状回復</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li><a href="owner-reports.html" class="active"><span class="menu-icon">📑</span>オーナー報告</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="オーナー名で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">経理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">オーナー報告</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li>オーナー報告</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <select class="form-select" style="width:auto;">
+                        <option>2026年4月</option>
+                        <option>2026年3月</option>
+                        <option>2026年2月</option>
+                    </select>
+                    <button class="btn btn-soft-primary btn-sm">📤 一括Web交付</button>
+                    <button class="btn btn-primary btn-sm">📋 月次報告書 一括生成</button>
+                </div>
+            </div>
+
+            <!-- 法令アラート -->
+            <div class="legal-note mb-3">
+                ⚖️ <strong>賃貸住宅管理業法 第20条 定期報告:</strong>
+                管理受託契約を締結した日から1年以内ごと、および契約の終了時に管理業務の実施状況を報告する義務があります。
+                <strong>未報告のオーナー: 3社</strong> (報告期限まで残30日以内)
+                <a href="#" style="color:inherit; text-decoration:underline; margin-left:0.5rem;">対象を確認</a>
+            </div>
+
+            <!-- KPI -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="kpi-card"><div><div class="kpi-label">オーナー数</div><div class="kpi-value">87<span class="kpi-unit">社</span></div><div class="kpi-delta">法人42 / 個人45</div></div><div class="kpi-icon">👥</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card success"><div><div class="kpi-label">月次報告 送付済</div><div class="kpi-value">84<span class="kpi-unit">/87</span></div><div class="kpi-delta">96.6%</div></div><div class="kpi-icon">✅</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card warning"><div><div class="kpi-label">年次報告 期限間近</div><div class="kpi-value">3<span class="kpi-unit">件</span></div><div class="kpi-delta down">法第20条義務</div></div><div class="kpi-icon">⚖️</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card info"><div><div class="kpi-label">預り敷金 総額</div><div class="kpi-value">¥124.8<span class="kpi-unit">M</span></div><div class="kpi-delta">分別管理対応</div></div><div class="kpi-icon">🔒</div></div>
+                </div>
+            </div>
+
+            <!-- 帳票テンプレート -->
+            <h5 class="card-title mb-3 mt-3">📄 帳票テンプレート</h5>
+            <div class="row">
+                <div class="col-3">
+                    <div class="doc-card">
+                        <div class="icon">💴</div>
+                        <div class="fw-bold mb-1">月次精算報告書</div>
+                        <div class="text-muted fs-sm">オーナー全物件の収支、PMフィー、立替金、送金額</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="doc-card">
+                        <div class="icon">📊</div>
+                        <div class="fw-bold mb-1">月次部屋別収支明細</div>
+                        <div class="text-muted fs-sm">部屋別の入金状況、滞納状況、契約状況</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="doc-card legal">
+                        <div class="icon">⚖️</div>
+                        <div class="fw-bold mb-1">年次管理業務報告書 <span class="badge badge-soft-warning">法定</span></div>
+                        <div class="text-muted fs-sm">賃貸住宅管理業法第20条 / 苦情の発生・対応状況含む</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="doc-card">
+                        <div class="icon">📈</div>
+                        <div class="fw-bold mb-1">年間収支報告書</div>
+                        <div class="text-muted fs-sm">月別/項目別の収入・支出推移、確定申告用</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="doc-card success">
+                        <div class="icon">🔒</div>
+                        <div class="fw-bold mb-1">預り敷金 残高一覧</div>
+                        <div class="text-muted fs-sm">物件別預り敷金、いずれ返還が必要となる金額</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="doc-card">
+                        <div class="icon">📋</div>
+                        <div class="fw-bold mb-1">確定申告用 収支内訳</div>
+                        <div class="text-muted fs-sm">不動産収支内訳書 (青色/白色対応CSV)</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="doc-card">
+                        <div class="icon">🔧</div>
+                        <div class="fw-bold mb-1">修繕履歴報告書</div>
+                        <div class="text-muted fs-sm">物件単位の修繕実施状況、保証期間</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="doc-card">
+                        <div class="icon">⚙️</div>
+                        <div class="fw-bold mb-1">テンプレート編集</div>
+                        <div class="text-muted fs-sm">オーナー会社別のフォーマットカスタマイズ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- オーナー別月次報告ステータス -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="card-title">2026年4月 月次報告 ステータス</h5>
+                    <div class="d-flex gap-2">
+                        <select class="form-select" style="width:auto;">
+                            <option>すべて</option>
+                            <option>未送付</option>
+                            <option>送付済</option>
+                            <option>閲覧確認済</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>オーナー</th>
+                                <th>区分</th>
+                                <th>物件数</th>
+                                <th>集金額</th>
+                                <th>PMフィー</th>
+                                <th>立替金</th>
+                                <th>源泉</th>
+                                <th>送金額</th>
+                                <th>預り敷金</th>
+                                <th>Web交付</th>
+                                <th>年次報告</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>株式会社渋谷ホールディングス</td>
+                                <td><span class="badge badge-soft-secondary">法人</span></td>
+                                <td>1物件 24戸</td>
+                                <td>¥3,420,000</td>
+                                <td>-¥171,000</td>
+                                <td>-¥48,000</td>
+                                <td>¥0</td>
+                                <td class="fw-bold">¥3,201,000</td>
+                                <td>¥4,800,000</td>
+                                <td><span class="badge badge-soft-success">✓ 閲覧済</span></td>
+                                <td><span class="badge badge-soft-success">2026/03/15済</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>木下 達也 様</td>
+                                <td><span class="badge badge-soft-info">個人</span></td>
+                                <td>1物件 16戸</td>
+                                <td>¥1,486,000</td>
+                                <td>-¥74,300</td>
+                                <td>-¥12,000</td>
+                                <td>-¥152,066</td>
+                                <td class="fw-bold">¥1,247,634</td>
+                                <td>¥3,200,000</td>
+                                <td><span class="badge badge-soft-warning">送付済(未閲覧)</span></td>
+                                <td><span class="badge badge-soft-danger">⚠️ 期限残14日</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>大和不動産投資ファンド</td>
+                                <td><span class="badge badge-soft-secondary">法人</span></td>
+                                <td>3物件 92戸</td>
+                                <td>¥18,420,000</td>
+                                <td>-¥921,000</td>
+                                <td>-¥386,000</td>
+                                <td>¥0</td>
+                                <td class="fw-bold">¥17,113,000</td>
+                                <td>¥18,400,000</td>
+                                <td><span class="badge badge-soft-success">✓ 閲覧済</span></td>
+                                <td><span class="badge badge-soft-success">2025/12/01済</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>株式会社シティ品川</td>
+                                <td><span class="badge badge-soft-secondary">法人</span></td>
+                                <td>1物件 48戸</td>
+                                <td>¥9,260,000</td>
+                                <td>-¥463,000</td>
+                                <td>-¥85,000</td>
+                                <td>¥0</td>
+                                <td class="fw-bold">¥8,712,000</td>
+                                <td>¥9,800,000</td>
+                                <td><span class="badge badge-soft-success">✓ 閲覧済</span></td>
+                                <td><span class="badge badge-soft-success">2025/11/20済</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>森山 浩二 様</td>
+                                <td><span class="badge badge-soft-info">個人</span></td>
+                                <td>1物件 5戸</td>
+                                <td>¥510,000</td>
+                                <td>-¥25,500</td>
+                                <td>-¥18,000</td>
+                                <td>-¥51,966</td>
+                                <td class="fw-bold">¥414,534</td>
+                                <td>¥780,000</td>
+                                <td><span class="badge badge-soft-warning">未送付</span></td>
+                                <td><span class="badge badge-soft-danger">⚠️ 期限残7日</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>株式会社六本木プロパティ</td>
+                                <td><span class="badge badge-soft-secondary">法人</span></td>
+                                <td>1物件 18戸</td>
+                                <td>¥5,840,000</td>
+                                <td>-¥292,000</td>
+                                <td>-¥120,000</td>
+                                <td>¥0</td>
+                                <td class="fw-bold">¥5,428,000</td>
+                                <td>¥6,500,000</td>
+                                <td><span class="badge badge-soft-success">✓ 閲覧済</span></td>
+                                <td><span class="badge badge-soft-warning">⚠️ 期限残30日</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>佐久間 由紀子 様</td>
+                                <td><span class="badge badge-soft-info">個人</span></td>
+                                <td>1物件 12戸</td>
+                                <td>¥1,420,000</td>
+                                <td>-¥71,000</td>
+                                <td>-¥8,000</td>
+                                <td>-¥146,200</td>
+                                <td class="fw-bold">¥1,194,800</td>
+                                <td>¥2,400,000</td>
+                                <td><span class="badge badge-soft-warning">未送付</span></td>
+                                <td><span class="badge badge-soft-success">2026/01/10済</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 法令対応注記 -->
+            <div class="row mt-3">
+                <div class="col-6">
+                    <div class="alert alert-primary">
+                        ℹ️ <strong>Web交付対応:</strong> 賃貸住宅管理業法施行規則40条に基づき、オーナーの承諾を得てWeb交付が可能です。アップロード時に通知メールを送付し、閲覧確認を記録しています。
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="alert alert-warning">
+                        ⚠️ <strong>財産分別管理 (法第16条):</strong> オーナー預り金口座と固有財産口座は明確に区別されています。預り敷金 総額 ¥124.8M は分別管理口座にて保管中。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

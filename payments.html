@@ -29,11 +29,14 @@
             <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
             <li class="menu-title">物件・契約</li>
             <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="listings.html"><span class="menu-icon">📢</span>募集管理</a></li>
             <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
-            <li><a href="#"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="renewals.html"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="restoration.html"><span class="menu-icon">🔁</span>原状回復</a></li>
             <li class="menu-title">財務</li>
             <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
             <li><a href="payments.html" class="active"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li><a href="owner-reports.html"><span class="menu-icon">📑</span>オーナー報告</a></li>
             <li class="menu-title">対応・修繕</li>
             <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
             <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
@@ -75,6 +78,14 @@
             <div class="alert alert-primary">
                 <strong>📥 4/27 取込結果:</strong> 入金136件 / <span class="fw-bold">自動消込 132件成功</span> / 要確認 4件
                 <a href="#" style="color:inherit; text-decoration:underline; margin-left:0.5rem;">要確認を表示</a>
+            </div>
+
+            <!-- 保証会社代位弁済期限アラート -->
+            <div class="alert alert-danger">
+                ⏰ <strong>保証会社 代位弁済 事故報告期限:</strong>
+                サンセット麻布 102 / 田中 一郎 様 (滞納2ヶ月) — 日本セーフティ規定 <strong>残5日</strong> /
+                グランデ目黒 503 / 株式会社XYZ商事 — Casa規定 残18日
+                <a href="#" style="color:inherit; text-decoration:underline; margin-left:0.5rem;">事故報告書を起票</a>
             </div>
 
             <!-- KPI -->
@@ -127,7 +138,9 @@
                     <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
                         <li><a href="#" class="active">消込ボード (4要確認)</a></li>
                         <li><a href="#">入金履歴</a></li>
-                        <li><a href="#">未収金管理</a></li>
+                        <li><a href="#">未収金エイジング</a></li>
+                        <li><a href="#">保証会社 代位弁済</a></li>
+                        <li><a href="#">預り敷金 分別管理</a></li>
                         <li><a href="#">オーナー送金</a></li>
                         <li><a href="#">FB出力履歴</a></li>
                     </ul>
@@ -232,7 +245,10 @@
             <!-- オーナー送金プレビュー -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">オーナー送金 (4月分プレビュー)</h5>
+                    <div>
+                        <h5 class="card-title">オーナー送金 (4月分プレビュー)</h5>
+                        <div class="card-subtitle">送金額 = 集金額 - PMフィー - 立替金(広告料/原状回復/清掃/修繕) - 源泉所得税</div>
+                    </div>
                     <div class="d-flex gap-2">
                         <button class="btn btn-soft-primary btn-sm">📋 オーナー報告書一括出力</button>
                         <button class="btn btn-primary btn-sm">📤 全銀FBデータ出力</button>
@@ -266,12 +282,12 @@
                                 <td><span class="badge badge-soft-warning">承認待ち</span></td>
                             </tr>
                             <tr>
-                                <td>木下 達也 様 (個人)</td>
+                                <td>木下 達也 様 (個人 / 海外居住)</td>
                                 <td>サンセット麻布</td>
                                 <td>¥1,486,000</td>
                                 <td>-¥74,300</td>
                                 <td>-¥12,000</td>
-                                <td>-¥152,066</td>
+                                <td>-¥152,066<br><span class="text-muted fs-sm">20.42%</span></td>
                                 <td class="fw-bold">¥1,247,634</td>
                                 <td>三井住友 麻布十番</td>
                                 <td><span class="badge badge-soft-warning">承認待ち</span></td>
@@ -300,6 +316,21 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- 法令注記 -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="alert alert-warning">
+                        🔒 <strong>賃貸住宅管理業法 第16条 財産分別管理:</strong>
+                        オーナー預り金口座と固有財産口座を分別管理しています。預り敷金 総額 <strong>¥124.8M</strong> は分別口座にて保管中。
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="alert alert-primary">
+                        ℹ️ <strong>源泉所得税:</strong> 海外居住オーナーは20.42%、法人オーナーは要件該当時に源泉徴収。インボイス免税事業者の場合はPMフィー処理が異なります(経過措置含む)。
+                    </div>
                 </div>
             </div>
         </div>

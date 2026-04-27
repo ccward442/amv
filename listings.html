@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>募集管理 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .funnel { display:flex; align-items:flex-end; gap:0.4rem; height:160px; padding:1rem 0;}
+        .funnel-bar { flex:1; background: linear-gradient(180deg, var(--vz-primary), var(--vz-secondary)); border-radius:6px 6px 0 0; position:relative; min-height:30px;}
+        .funnel-bar.s2 { background: linear-gradient(180deg, #5b8def, #3577f1); }
+        .funnel-bar.s3 { background: linear-gradient(180deg, #7a9eff, #5b8def); }
+        .funnel-bar.s4 { background: linear-gradient(180deg, #0ab39c, #089580); }
+        .funnel-bar .label { position:absolute; bottom:-1.5rem; left:0; right:0; text-align:center; font-size:0.6875rem; color:var(--vz-muted-color);}
+        .funnel-bar .num { position:absolute; top:-1.25rem; left:0; right:0; text-align:center; font-size:0.75rem; font-weight:700; color:var(--vz-heading-color);}
+
+        .portal-status { display:flex; gap:0.4rem; flex-wrap:wrap;}
+        .portal-tag { padding:0.2rem 0.5rem; border-radius:3px; font-size:0.625rem; font-weight:600; display:inline-flex; align-items:center; gap:0.25rem;}
+        .portal-tag.connected { background: rgba(10,179,156,0.12); color: var(--vz-success);}
+        .portal-tag.error { background: rgba(240,101,72,0.12); color: var(--vz-danger);}
+        .portal-tag.pending { background: rgba(247,184,75,0.18); color: #c08a2c;}
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="listings.html" class="active"><span class="menu-icon">📢</span>募集管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="renewals.html"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="restoration.html"><span class="menu-icon">🔁</span>原状回復</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li><a href="owner-reports.html"><span class="menu-icon">📑</span>オーナー報告</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="物件名・反響者で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">営業担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">募集管理</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li>募集管理</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📋 マイソク 一括出力</button>
+                    <button class="btn btn-soft-warning btn-sm">⏸ 全ポータル 募集停止</button>
+                    <a href="#" class="btn btn-primary btn-sm">＋ 募集物件 登録</a>
+                </div>
+            </div>
+
+            <!-- KPI -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="kpi-card"><div><div class="kpi-label">募集中</div><div class="kpi-value">38<span class="kpi-unit">件</span></div></div><div class="kpi-icon">📢</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card info"><div><div class="kpi-label">将来空室予測 (3ヶ月)</div><div class="kpi-value">14<span class="kpi-unit">件</span></div><div class="kpi-delta">退去予告ベース</div></div><div class="kpi-icon">📅</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card success"><div><div class="kpi-label">今月反響</div><div class="kpi-value">128<span class="kpi-unit">件</span></div><div class="kpi-delta">▲ 18件 (前月比)</div></div><div class="kpi-icon">📩</div></div>
+                </div>
+                <div class="col-3">
+                    <div class="kpi-card warning"><div><div class="kpi-label">未対応反響</div><div class="kpi-value">7<span class="kpi-unit">件</span></div><div class="kpi-delta down">SLA 24h超 1件</div></div><div class="kpi-icon">⏰</div></div>
+                </div>
+            </div>
+
+            <!-- ファネル + ポータル別反響 -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header"><h5 class="card-title">📈 募集ファネル (4月)</h5><span class="text-muted fs-sm">CV率 9.4%</span></div>
+                        <div class="card-body">
+                            <div class="funnel" style="margin-bottom:2rem;">
+                                <div class="funnel-bar" style="height:100%;"><span class="num">128</span><span class="label">反響</span></div>
+                                <div class="funnel-bar s2" style="height:55%;"><span class="num">42</span><span class="label">内見</span></div>
+                                <div class="funnel-bar s3" style="height:30%;"><span class="num">18</span><span class="label">申込</span></div>
+                                <div class="funnel-bar s4" style="height:20%;"><span class="num">12</span><span class="label">契約</span></div>
+                            </div>
+                            <div class="d-flex justify-between mt-4 fs-sm text-muted">
+                                <span>反響→内見 32.8%</span>
+                                <span>内見→申込 42.9%</span>
+                                <span>申込→契約 66.7%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header"><h5 class="card-title">📊 ポータル別 反響</h5><a href="#" class="fs-sm">設定</a></div>
+                        <div class="card-body">
+                            <div class="d-flex justify-between mb-2"><span>SUUMO <span class="portal-tag connected">●連携中</span></span><span class="fw-bold">52件</span></div>
+                            <div style="height:6px; background:var(--vz-gray-200); border-radius:3px; margin-bottom:0.75rem;"><div style="width:80%; background:var(--vz-primary); height:100%; border-radius:3px;"></div></div>
+                            <div class="d-flex justify-between mb-2"><span>HOME'S <span class="portal-tag connected">●連携中</span></span><span class="fw-bold">38件</span></div>
+                            <div style="height:6px; background:var(--vz-gray-200); border-radius:3px; margin-bottom:0.75rem;"><div style="width:58%; background:var(--vz-success); height:100%; border-radius:3px;"></div></div>
+                            <div class="d-flex justify-between mb-2"><span>at home <span class="portal-tag connected">●連携中</span></span><span class="fw-bold">22件</span></div>
+                            <div style="height:6px; background:var(--vz-gray-200); border-radius:3px; margin-bottom:0.75rem;"><div style="width:34%; background:var(--vz-info); height:100%; border-radius:3px;"></div></div>
+                            <div class="d-flex justify-between mb-2"><span>CHINTAI <span class="portal-tag pending">●掲載準備中</span></span><span class="fw-bold">10件</span></div>
+                            <div style="height:6px; background:var(--vz-gray-200); border-radius:3px; margin-bottom:0.75rem;"><div style="width:15%; background:var(--vz-warning); height:100%; border-radius:3px;"></div></div>
+                            <div class="d-flex justify-between mb-2"><span>自社HP / その他</span><span class="fw-bold">6件</span></div>
+                            <div style="height:6px; background:var(--vz-gray-200); border-radius:3px;"><div style="width:9%; background:var(--vz-secondary); height:100%; border-radius:3px;"></div></div>
+                            <div class="alert alert-warning mt-3" style="font-size:0.75rem;">
+                                ⚠️ REINS / ATBB 連携は Phase 1.5 で対応予定
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 募集物件一覧 -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">募集物件一覧</h5>
+                    <div class="d-flex gap-2">
+                        <select class="form-select" style="width:auto;">
+                            <option>状態: すべて</option>
+                            <option>募集中</option>
+                            <option>停止</option>
+                            <option>予約中</option>
+                            <option>申込中</option>
+                        </select>
+                        <button class="btn btn-light btn-sm">CSV取込</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>物件 / 部屋</th>
+                                <th>賃料 / 共益費</th>
+                                <th>条件</th>
+                                <th>ポータル掲載</th>
+                                <th>反響</th>
+                                <th>内見</th>
+                                <th>申込</th>
+                                <th>状態</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>パークサイド渋谷 401<br><span class="text-muted fs-sm">1LDK / 38.5㎡ / 4F</span></td>
+                                <td>¥158,000<br><span class="text-muted fs-sm">¥8,000</span></td>
+                                <td><span class="badge badge-soft-secondary">ペット可</span> <span class="badge badge-soft-secondary">楽器不可</span></td>
+                                <td><div class="portal-status"><span class="portal-tag connected">SUUMO</span><span class="portal-tag connected">HOME'S</span><span class="portal-tag connected">at home</span></div></td>
+                                <td>12件</td>
+                                <td>4件</td>
+                                <td>1件</td>
+                                <td><span class="badge badge-soft-warning">内見調整中</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>グランデ目黒 203<br><span class="text-muted fs-sm">2DK / 45.2㎡ / 2F</span></td>
+                                <td>¥132,000<br><span class="text-muted fs-sm">¥7,000</span></td>
+                                <td><span class="badge badge-soft-secondary">即入居可</span></td>
+                                <td><div class="portal-status"><span class="portal-tag connected">SUUMO</span><span class="portal-tag connected">HOME'S</span><span class="portal-tag connected">at home</span></div></td>
+                                <td>8件</td>
+                                <td>3件</td>
+                                <td>1件</td>
+                                <td><span class="badge badge-soft-success">申込済 (審査中)</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>サンセット麻布 305<br><span class="text-muted fs-sm">1K / 25.8㎡ / 3F</span></td>
+                                <td>¥98,000<br><span class="text-muted fs-sm">¥6,000</span></td>
+                                <td><span class="badge badge-soft-secondary">学生可</span> <span class="badge badge-soft-secondary">外国人可</span></td>
+                                <td><div class="portal-status"><span class="portal-tag connected">SUUMO</span><span class="portal-tag error">HOME'S 連携エラー</span></div></td>
+                                <td>3件</td>
+                                <td>1件</td>
+                                <td>0件</td>
+                                <td><span class="badge badge-soft-primary">募集中</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>リバーサイド品川 502<br><span class="text-muted fs-sm">2LDK / 52.1㎡ / 5F</span></td>
+                                <td>¥186,000<br><span class="text-muted fs-sm">¥9,000</span></td>
+                                <td><span class="badge badge-soft-secondary">フリーレント1ヶ月</span> <span class="badge badge-soft-secondary">二人入居可</span></td>
+                                <td><div class="portal-status"><span class="portal-tag connected">SUUMO</span><span class="portal-tag connected">HOME'S</span><span class="portal-tag connected">at home</span><span class="portal-tag pending">CHINTAI</span></div></td>
+                                <td>5件</td>
+                                <td>2件</td>
+                                <td>0件</td>
+                                <td><span class="badge badge-soft-primary">募集中</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>ヴィラ恵比寿 105<br><span class="text-muted fs-sm">1DK / 32.5㎡ / 1F</span></td>
+                                <td>¥112,000<br><span class="text-muted fs-sm">¥5,000</span></td>
+                                <td><span class="badge badge-soft-secondary">ペット不可</span></td>
+                                <td><div class="portal-status"><span class="portal-tag connected">SUUMO</span></div></td>
+                                <td>2件</td>
+                                <td>0件</td>
+                                <td>0件</td>
+                                <td><span class="badge badge-soft-secondary">募集停止 (リフォーム中)</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>セントラル新宿 1502<br><span class="text-muted fs-sm">2LDK / 58.3㎡ / 15F</span></td>
+                                <td>¥248,000<br><span class="text-muted fs-sm">¥12,000</span></td>
+                                <td><span class="badge badge-soft-secondary">法人可</span> <span class="badge badge-soft-secondary">即入居可</span></td>
+                                <td><div class="portal-status"><span class="portal-tag connected">SUUMO</span><span class="portal-tag connected">HOME'S</span></div></td>
+                                <td>9件</td>
+                                <td>3件</td>
+                                <td>2件</td>
+                                <td><span class="badge badge-soft-success">申込済 (審査中)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 反響対応 / 内見予約 -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header"><h5 class="card-title">📩 未対応 反響</h5><span class="badge badge-soft-warning">7件</span></div>
+                        <div class="card-body" style="padding-top:0.5rem;">
+                            <ul class="list-group">
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(240,101,72,0.12); color:var(--vz-danger);">⏰</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">SUUMO反響: 中村 真由美 様 (パークサイド渋谷 401)</div>
+                                        <div class="list-item-meta">受付 2026/04/26 14:32 / SLA超過 28h</div>
+                                    </div>
+                                    <button class="btn btn-soft-danger btn-sm">対応</button>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(53,119,241,0.12); color:var(--vz-primary);">📩</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">HOME'S反響: 株式会社デザイン社 (六本木プレミアム)</div>
+                                        <div class="list-item-meta">受付 2026/04/27 09:11 / SLA残20h</div>
+                                    </div>
+                                    <button class="btn btn-soft-primary btn-sm">対応</button>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(53,119,241,0.12); color:var(--vz-primary);">📞</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">電話: 山田 慎一 様 (内見希望 リバーサイド品川 502)</div>
+                                        <div class="list-item-meta">受付 2026/04/27 10:25</div>
+                                    </div>
+                                    <button class="btn btn-soft-primary btn-sm">対応</button>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon" style="background:rgba(247,184,75,0.18); color:#c08a2c;">✉️</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">メール: 佐藤 大輔 様 (グランデ目黒 203 詳細問合せ)</div>
+                                        <div class="list-item-meta">受付 2026/04/27 11:02</div>
+                                    </div>
+                                    <button class="btn btn-soft-primary btn-sm">対応</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header"><h5 class="card-title">📅 内見スケジュール (本日)</h5></div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead><tr><th>時間</th><th>物件</th><th>顧客</th><th>担当</th><th>鍵</th><th>状態</th></tr></thead>
+                                <tbody>
+                                    <tr>
+                                        <td>10:30</td>
+                                        <td>パークサイド渋谷 401</td>
+                                        <td>田中 ご夫妻</td>
+                                        <td>山形</td>
+                                        <td><span class="badge badge-soft-secondary">キーボックス</span></td>
+                                        <td><span class="badge badge-soft-success">完了</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:00</td>
+                                        <td>リバーサイド品川 502</td>
+                                        <td>木村 様</td>
+                                        <td>木村</td>
+                                        <td><span class="badge badge-soft-warning">立会必要</span></td>
+                                        <td><span class="badge badge-soft-warning">準備中</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>16:30</td>
+                                        <td>グランデ目黒 305</td>
+                                        <td>山本 様 (家族3名)</td>
+                                        <td>山形</td>
+                                        <td><span class="badge badge-soft-secondary">管理会社</span></td>
+                                        <td><span class="badge badge-soft-primary">予定</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>18:00</td>
+                                        <td>セントラル新宿 1502</td>
+                                        <td>株式会社ABC社</td>
+                                        <td>木村</td>
+                                        <td><span class="badge badge-soft-secondary">管理会社</span></td>
+                                        <td><span class="badge badge-soft-primary">予定</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>

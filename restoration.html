@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原状回復管理 - 不動産物件管理システム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .step-bar { display:flex; gap:0.5rem; margin-bottom:1.25rem; flex-wrap:wrap;}
+        .step { flex:1; min-width:140px; padding:0.6rem 0.8rem; background:#fff; border-radius:6px; border-left:3px solid var(--vz-gray-300); position:relative;}
+        .step.done { border-left-color:var(--vz-success); }
+        .step.active { border-left-color:var(--vz-primary); background: rgba(53,119,241,0.04);}
+        .step .num { font-size:0.625rem; color:var(--vz-muted-color); font-weight:600;}
+        .step .label { font-size:0.8125rem; font-weight:500; color:var(--vz-heading-color);}
+        .step.done .num { color:var(--vz-success); }
+        .step.active .num { color:var(--vz-primary); }
+
+        .cause-cell { padding:0.4rem 0.5rem; border-radius:4px; font-size:0.6875rem; font-weight:600; display:inline-block;}
+        .cause-A { background: rgba(10,179,156,0.12); color: var(--vz-success);}
+        .cause-B { background: rgba(240,101,72,0.12); color: var(--vz-danger);}
+        .cause-AB { background: rgba(247,184,75,0.18); color:#c08a2c;}
+        .cause-AG { background: rgba(41,156,219,0.12); color: var(--vz-info);}
+
+        .calc-box { background:var(--vz-gray-100); border-radius:6px; padding:1rem; font-family: 'Courier New', monospace; font-size:0.8125rem;}
+        .calc-row { display:flex; justify-content:space-between; padding:0.25rem 0;}
+        .calc-row.total { border-top:1px solid var(--vz-border-color); margin-top:0.4rem; padding-top:0.5rem; font-weight:700;}
+
+        .checklist-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:0.5rem;}
+        .check-card { background:#fff; border:1px solid var(--vz-border-color); border-radius:6px; padding:0.65rem; cursor:pointer; transition:all 0.15s;}
+        .check-card:hover { border-color:var(--vz-primary); }
+        .check-card .head { font-size:0.75rem; font-weight:600; margin-bottom:0.4rem; display:flex; justify-content:space-between; align-items:center;}
+        .check-card .body { font-size:0.6875rem; color:var(--vz-muted-color);}
+    </style>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><span class="brand-icon">🏢</span> 不動産PM</div>
+        <ul class="sidebar-menu">
+            <li class="menu-title">ホーム</li>
+            <li><a href="dashboard.html"><span class="menu-icon">📊</span>ダッシュボード</a></li>
+            <li class="menu-title">物件・契約</li>
+            <li><a href="properties.html"><span class="menu-icon">🏘️</span>物件管理</a></li>
+            <li><a href="listings.html"><span class="menu-icon">📢</span>募集管理</a></li>
+            <li><a href="contracts.html"><span class="menu-icon">📄</span>契約管理</a></li>
+            <li><a href="renewals.html"><span class="menu-icon">🔄</span>更新管理</a></li>
+            <li><a href="restoration.html" class="active"><span class="menu-icon">🔁</span>原状回復</a></li>
+            <li class="menu-title">財務</li>
+            <li><a href="invoices.html"><span class="menu-icon">💴</span>請求管理</a></li>
+            <li><a href="payments.html"><span class="menu-icon">🏦</span>入金管理</a></li>
+            <li><a href="owner-reports.html"><span class="menu-icon">📑</span>オーナー報告</a></li>
+            <li class="menu-title">対応・修繕</li>
+            <li><a href="inquiries.html"><span class="menu-icon">💬</span>問い合わせ</a></li>
+            <li><a href="repairs.html"><span class="menu-icon">🔧</span>修繕管理</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <div class="search-bar"><input type="text" placeholder="退去案件で検索…"></div>
+            </div>
+            <div class="header-right">
+                <button class="header-icon-btn">🔔<span class="badge-dot"></span></button>
+                <div class="user-menu">
+                    <div class="user-avatar">YK</div>
+                    <div><div class="user-name">山形 健司</div><div class="user-role">管理担当</div></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-title-box">
+                <div>
+                    <div class="page-title">原状回復精算 - パークサイド渋谷 301</div>
+                    <ul class="breadcrumb">
+                        <li><a href="dashboard.html">ホーム</a></li>
+                        <li><a href="#">原状回復</a></li>
+                        <li>パークサイド渋谷 301 (佐藤 麻衣 様)</li>
+                    </ul>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm">📋 立会記録 PDF</button>
+                    <button class="btn btn-soft-primary btn-sm">📤 入居者承認依頼</button>
+                    <button class="btn btn-primary btn-sm">📑 敷金精算書 発行</button>
+                </div>
+            </div>
+
+            <!-- 進捗ステップ -->
+            <div class="step-bar">
+                <div class="step done"><div class="num">STEP 1</div><div class="label">解約予告 受領</div></div>
+                <div class="step done"><div class="num">STEP 2</div><div class="label">立会日程 調整</div></div>
+                <div class="step active"><div class="num">STEP 3</div><div class="label">立会記録 / 区分判定</div></div>
+                <div class="step"><div class="num">STEP 4</div><div class="label">原状回復見積</div></div>
+                <div class="step"><div class="num">STEP 5</div><div class="label">敷金精算</div></div>
+                <div class="step"><div class="num">STEP 6</div><div class="label">入居者承認</div></div>
+                <div class="step"><div class="num">STEP 7</div><div class="label">返還処理</div></div>
+            </div>
+
+            <!-- 案件サマリ -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="text-muted fs-sm">入居者</div>
+                            <div class="fw-bold">佐藤 麻衣 様</div>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-muted fs-sm">入居期間</div>
+                            <div class="fw-bold">2024/05/15 〜 2026/04/30 <span class="text-muted">(2年0ヶ月)</span></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-muted fs-sm">部屋</div>
+                            <div class="fw-bold">2DK / 45.8㎡</div>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-muted fs-sm">預り敷金</div>
+                            <div class="fw-bold" style="color:var(--vz-success);">¥336,000 (賃料2ヶ月分)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ -->
+            <div class="card">
+                <div class="card-header" style="padding-bottom:0;">
+                    <ul class="nav-tabs" style="border-bottom:none; margin-bottom:0;">
+                        <li><a href="#" class="active">立会記録 / 区分判定</a></li>
+                        <li><a href="#">原状回復見積</a></li>
+                        <li><a href="#">敷金精算書</a></li>
+                        <li><a href="#">特約 / 説明記録</a></li>
+                        <li><a href="#">写真 (Before/After)</a></li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title mb-3">📋 立会チェックリスト</h5>
+                    <div class="checklist-grid mb-3">
+                        <div class="check-card"><div class="head">居室 (洋室6帖) <span class="badge badge-soft-warning">3</span></div><div class="body">壁紙汚れ・床傷・天井</div></div>
+                        <div class="check-card"><div class="head">居室 (洋室8帖) <span class="badge badge-soft-success">0</span></div><div class="body">問題なし</div></div>
+                        <div class="check-card"><div class="head">キッチン <span class="badge badge-soft-warning">2</span></div><div class="body">レンジフード・床</div></div>
+                        <div class="check-card"><div class="head">浴室 <span class="badge badge-soft-success">0</span></div><div class="body">問題なし</div></div>
+                        <div class="check-card"><div class="head">トイレ <span class="badge badge-soft-warning">1</span></div><div class="body">便座シミ</div></div>
+                        <div class="check-card"><div class="head">洗面 <span class="badge badge-soft-success">0</span></div><div class="body">問題なし</div></div>
+                        <div class="check-card"><div class="head">バルコニー <span class="badge badge-soft-success">0</span></div><div class="body">問題なし</div></div>
+                        <div class="check-card"><div class="head">玄関 <span class="badge badge-soft-warning">1</span></div><div class="body">下駄箱</div></div>
+                    </div>
+
+                    <h5 class="card-title mb-2 mt-4">🧮 損耗箇所の原因区分判定 (国交省ガイドライン準拠)</h5>
+                    <div class="text-muted fs-sm mb-3">
+                        <span class="cause-cell cause-A">A: 通常使用</span>
+                        <span class="cause-cell cause-B">B: 故意・過失</span>
+                        <span class="cause-cell cause-AB">A(+B): 通常使用+管理悪化</span>
+                        <span class="cause-cell cause-AG">A(+G): 通常使用+価値増</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>箇所</th>
+                                    <th>損耗内容</th>
+                                    <th>区分</th>
+                                    <th>耐用年数</th>
+                                    <th>入居年数</th>
+                                    <th>残存価値率</th>
+                                    <th>原状回復費</th>
+                                    <th>借主負担額</th>
+                                    <th>貸主負担額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>居室6帖 壁紙</td>
+                                    <td>日焼け・経年退色</td>
+                                    <td><span class="cause-cell cause-A">A</span></td>
+                                    <td>6年</td>
+                                    <td>2年</td>
+                                    <td>—</td>
+                                    <td>¥48,000</td>
+                                    <td class="fw-bold">¥0</td>
+                                    <td>¥48,000</td>
+                                </tr>
+                                <tr>
+                                    <td>居室6帖 床</td>
+                                    <td>家具設置による凹み</td>
+                                    <td><span class="cause-cell cause-A">A</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td class="fw-bold">¥0</td>
+                                    <td>¥0</td>
+                                </tr>
+                                <tr>
+                                    <td>居室6帖 壁紙</td>
+                                    <td>タバコによる黄ばみ・臭い</td>
+                                    <td><span class="cause-cell cause-B">B</span></td>
+                                    <td>6年</td>
+                                    <td>2年</td>
+                                    <td>66.7% (4/6)</td>
+                                    <td>¥36,000</td>
+                                    <td class="fw-bold" style="color:var(--vz-danger);">¥24,000</td>
+                                    <td>¥12,000</td>
+                                </tr>
+                                <tr>
+                                    <td>キッチン レンジフード</td>
+                                    <td>油汚れ・通常清掃で除去不可</td>
+                                    <td><span class="cause-cell cause-AB">A(+B)</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>清掃費</td>
+                                    <td>¥18,000</td>
+                                    <td class="fw-bold" style="color:var(--vz-warning);">¥18,000</td>
+                                    <td>¥0</td>
+                                </tr>
+                                <tr>
+                                    <td>キッチン 床 (CF)</td>
+                                    <td>ジュース染み・カビ</td>
+                                    <td><span class="cause-cell cause-B">B</span></td>
+                                    <td>6年</td>
+                                    <td>2年</td>
+                                    <td>66.7% (4/6)</td>
+                                    <td>¥22,000</td>
+                                    <td class="fw-bold" style="color:var(--vz-danger);">¥14,667</td>
+                                    <td>¥7,333</td>
+                                </tr>
+                                <tr>
+                                    <td>トイレ 便座</td>
+                                    <td>強い尿石・通常清掃で除去不可</td>
+                                    <td><span class="cause-cell cause-B">B</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>清掃費</td>
+                                    <td>¥8,000</td>
+                                    <td class="fw-bold" style="color:var(--vz-danger);">¥8,000</td>
+                                    <td>¥0</td>
+                                </tr>
+                                <tr>
+                                    <td>玄関 下駄箱</td>
+                                    <td>傷 (家具搬入時の擦り傷)</td>
+                                    <td><span class="cause-cell cause-B">B</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>部分補修</td>
+                                    <td>¥6,000</td>
+                                    <td class="fw-bold" style="color:var(--vz-danger);">¥6,000</td>
+                                    <td>¥0</td>
+                                </tr>
+                                <tr>
+                                    <td>全室クリーニング</td>
+                                    <td>退去時清掃 (特約)</td>
+                                    <td><span class="cause-cell cause-B">特約B</span></td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>特約有効</td>
+                                    <td>¥35,000</td>
+                                    <td class="fw-bold" style="color:var(--vz-warning);">¥35,000</td>
+                                    <td>¥0</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="background:var(--vz-gray-100); font-weight:700;">
+                                    <td colspan="6" class="text-end">合計</td>
+                                    <td>¥173,000</td>
+                                    <td style="color:var(--vz-danger);">¥105,667</td>
+                                    <td style="color:var(--vz-success);">¥67,333</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- 計算詳細 -->
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <div class="alert alert-primary">
+                                ℹ️ <strong>経過年数考慮ロジック (残存価値1円方式):</strong><br>
+                                借主負担額 = 原状回復費 × <strong>(耐用年数 − 入居年数) ÷ 耐用年数</strong><br>
+                                ※フローリング部分補修・畳表替え等は経過年数考慮せず単価×面積<br>
+                                ※エアコン6〜15年/クロス6年/CF6年/カーペット6年/畳6年
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="alert alert-warning">
+                                ⚠️ <strong>特約の有効性:</strong> 「退去時クリーニング費用 借主負担」の特約は、<strong>消費者契約法10条</strong>の観点から(1)契約締結前の説明、(2)金額の明示、(3)入居者の明確な合意の3要件を満たす場合に有効。本契約は要件を満たしています。
+                                <a href="#" style="color:inherit; text-decoration:underline;">特約合意書を確認</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 敷金精算 -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header"><h5 class="card-title">💴 敷金精算</h5></div>
+                        <div class="card-body">
+                            <div class="calc-box">
+                                <div class="calc-row"><span>預り敷金</span><span>¥336,000</span></div>
+                                <div class="calc-row"><span>− 借主負担分 (原状回復)</span><span style="color:var(--vz-danger);">−¥105,667</span></div>
+                                <div class="calc-row"><span>− 未払賃料 (4月日割)</span><span>¥0</span></div>
+                                <div class="calc-row"><span>− 違約金 / その他</span><span>¥0</span></div>
+                                <div class="calc-row total" style="font-size:1rem;">
+                                    <span style="color:var(--vz-success);">返還額</span>
+                                    <span style="color:var(--vz-success);">¥230,333</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-end gap-2 mt-3">
+                                <button class="btn btn-light btn-sm">PDF出力</button>
+                                <button class="btn btn-primary btn-sm">📤 精算書を入居者へ送付</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header"><h5 class="card-title">📷 紛争予防証跡</h5></div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-item">
+                                    <div class="list-item-icon">📸</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">入居時写真 (38枚)</div>
+                                        <div class="list-item-meta">2024/05/15 撮影 / 入居者立会済</div>
+                                    </div>
+                                    <a href="#" class="fs-sm">表示</a>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon">📸</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">退去時写真 (45枚)</div>
+                                        <div class="list-item-meta">2026/04/27 撮影 / 入居者立会済</div>
+                                    </div>
+                                    <a href="#" class="fs-sm">表示</a>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon">📝</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">立会記録書 (電子サイン済)</div>
+                                        <div class="list-item-meta">入居者署名: 佐藤 麻衣 / 担当: 山形</div>
+                                    </div>
+                                    <a href="#" class="fs-sm">表示</a>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon">📜</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">特約合意書 (説明済)</div>
+                                        <div class="list-item-meta">クリーニング特約 ¥35,000 / 入居時説明済</div>
+                                    </div>
+                                    <a href="#" class="fs-sm">表示</a>
+                                </li>
+                                <li class="list-item">
+                                    <div class="list-item-icon">📜</div>
+                                    <div class="list-item-body">
+                                        <div class="list-item-title">国交省ガイドライン適用記録</div>
+                                        <div class="list-item-meta">原状回復をめぐるトラブルとガイドライン (再改訂版)</div>
+                                    </div>
+                                    <a href="#" class="fs-sm">表示</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/sidebar.js"></script>
+</body>
+</html>
